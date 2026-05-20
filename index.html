@@ -1,0 +1,2868 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP Calculus BC — Complete Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root {
+  --bg: #0a0d14;
+  --bg2: #10141f;
+  --bg3: #161b2e;
+  --sidebar: #0d1020;
+  --card: #13182a;
+  --card2: #1a2035;
+  --border: #1e2640;
+  --border2: #2a3355;
+  --accent: #4f8ef7;
+  --accent2: #7b5ff5;
+  --accent3: #00d4aa;
+  --accent4: #f7a84f;
+  --accent5: #f75f7b;
+  --text: #e8eaf2;
+  --text2: #9ba3c0;
+  --text3: #5c6480;
+  --formula-bg: #0e1525;
+  --note-bg: #1a1a0d;
+  --note-border: #4f8ef7;
+  --warn-bg: #1a0d10;
+  --tip-bg: #0d1a14;
+  --heading-font: 'Crimson Pro', Georgia, serif;
+  --body-font: 'DM Sans', sans-serif;
+  --mono-font: 'JetBrains Mono', monospace;
+  --sidebar-w: 280px;
+  --radius: 10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--body-font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  overflow-x: hidden;
+}
+
+/* ─── SIDEBAR ─────────────────────────────────────────────────────────────── */
+#sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  left: 0; top: 0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-track { background: transparent; }
+#sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.sidebar-header {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0;
+  background: var(--sidebar);
+  z-index: 10;
+}
+
+.sidebar-logo {
+  font-family: var(--heading-font);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.sidebar-logo span { color: var(--accent); }
+
+.sidebar-sub {
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.sidebar-search {
+  margin: 12px 16px;
+  position: relative;
+}
+
+.sidebar-search input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 12px 7px 30px;
+  color: var(--text);
+  font-family: var(--body-font);
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.sidebar-search input:focus { border-color: var(--accent); }
+.sidebar-search input::placeholder { color: var(--text3); }
+
+.sidebar-search::before {
+  content: '⌕';
+  position: absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text3);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.nav-unit {
+  padding: 6px 16px 2px;
+}
+
+.nav-unit-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 10px 4px 4px;
+  font-weight: 500;
+}
+
+.nav-unit-label span {
+  color: var(--accent);
+  margin-right: 4px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 12.5px;
+  transition: all 0.15s;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-link:hover { background: var(--bg3); color: var(--text); }
+.nav-link.active { background: rgba(79,142,247,0.12); color: var(--accent); }
+
+.nav-link .dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--border2);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.nav-link.active .dot, .nav-link:hover .dot { background: var(--accent); }
+
+/* ─── MAIN ────────────────────────────────────────────────────────────────── */
+#main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* ─── HERO ────────────────────────────────────────────────────────────────── */
+.hero {
+  padding: 80px 60px 60px;
+  background: linear-gradient(135deg, #0a0d14 0%, #0e1528 50%, #0a1020 100%);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(79,142,247,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -50px; left: 200px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(123,95,245,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.hero-title {
+  font-family: var(--heading-font);
+  font-size: clamp(42px, 5vw, 68px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.hero-title em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  color: var(--text2);
+  font-size: 16px;
+  max-width: 520px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.hero-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.pill-blue { background: rgba(79,142,247,0.12); color: var(--accent); border: 1px solid rgba(79,142,247,0.2); }
+.pill-purple { background: rgba(123,95,245,0.12); color: var(--accent2); border: 1px solid rgba(123,95,245,0.2); }
+.pill-green { background: rgba(0,212,170,0.1); color: var(--accent3); border: 1px solid rgba(0,212,170,0.2); }
+.pill-orange { background: rgba(247,168,79,0.1); color: var(--accent4); border: 1px solid rgba(247,168,79,0.2); }
+
+/* ─── CONTENT ────────────────────────────────────────────────────────────── */
+.content {
+  padding: 48px 60px;
+  max-width: 1000px;
+}
+
+/* ─── SECTION ────────────────────────────────────────────────────────────── */
+.section {
+  margin-bottom: 80px;
+  scroll-margin-top: 32px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono-font);
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: var(--heading-font);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+/* ─── TOPIC CARDS ────────────────────────────────────────────────────────── */
+.topic-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.topic-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.topic-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-1px);
+}
+
+.topic-card-header {
+  padding: 18px 22px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.topic-card-header h3 {
+  font-family: var(--heading-font);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  flex: 1;
+}
+
+.topic-toggle {
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text3);
+  font-size: 13px;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.topic-card.open .topic-toggle { background: var(--accent); border-color: var(--accent); color: white; transform: rotate(45deg); }
+
+.topic-body {
+  display: none;
+  padding: 0 22px 22px;
+  border-top: 1px solid var(--border);
+}
+
+.topic-card.open .topic-body { display: block; }
+
+.topic-body p {
+  color: var(--text2);
+  font-size: 14.5px;
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+.topic-body p:last-child { margin-bottom: 0; }
+
+/* ─── FORMULA BLOCKS ─────────────────────────────────────────────────────── */
+.formula-block {
+  background: var(--formula-bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 13px 18px;
+  margin: 12px 0;
+  font-family: var(--mono-font);
+  font-size: 13.5px;
+  overflow-x: auto;
+}
+
+.formula-block .katex { font-size: 1.1em; }
+
+.formula-label {
+  font-family: var(--body-font);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.formula-group {
+  background: var(--formula-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin: 14px 0;
+}
+
+.formula-group-title {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.formula-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.formula-row:last-child { border-bottom: none; }
+
+.formula-row .lhs {
+  flex: 1;
+  font-family: var(--mono-font);
+  font-size: 13px;
+  color: var(--text);
+}
+
+.formula-row .rhs {
+  flex: 1.2;
+  font-size: 12px;
+  color: var(--text2);
+}
+
+/* ─── CALLOUTS ───────────────────────────────────────────────────────────── */
+.callout {
+  border-radius: 8px;
+  padding: 13px 16px;
+  margin: 14px 0;
+  font-size: 13.5px;
+  line-height: 1.65;
+  display: flex;
+  gap: 12px;
+}
+
+.callout-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.callout-body { flex: 1; }
+.callout-body strong { font-weight: 600; display: block; margin-bottom: 3px; }
+
+.callout-note {
+  background: rgba(79,142,247,0.08);
+  border: 1px solid rgba(79,142,247,0.15);
+}
+.callout-note .callout-icon { color: var(--accent); }
+.callout-note .callout-body { color: #a8bfe8; }
+
+.callout-tip {
+  background: rgba(0,212,170,0.06);
+  border: 1px solid rgba(0,212,170,0.15);
+}
+.callout-tip .callout-icon { color: var(--accent3); }
+.callout-tip .callout-body { color: #8dd8cc; }
+
+.callout-warn {
+  background: rgba(247,95,123,0.06);
+  border: 1px solid rgba(247,95,123,0.15);
+}
+.callout-warn .callout-icon { color: var(--accent5); }
+.callout-warn .callout-body { color: #d4909f; }
+
+.callout-key {
+  background: rgba(247,168,79,0.07);
+  border: 1px solid rgba(247,168,79,0.15);
+}
+.callout-key .callout-icon { color: var(--accent4); }
+.callout-key .callout-body { color: #d4b88a; }
+
+/* ─── BULLET LIST ────────────────────────────────────────────────────────── */
+.concept-list {
+  list-style: none;
+  margin: 10px 0;
+}
+
+.concept-list li {
+  padding: 5px 0 5px 18px;
+  position: relative;
+  color: var(--text2);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.concept-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 11px;
+  top: 7px;
+}
+
+/* ─── TABLE ──────────────────────────────────────────────────────────────── */
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 13px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.ref-table th {
+  background: var(--bg3);
+  color: var(--text2);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.ref-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  vertical-align: top;
+  line-height: 1.5;
+}
+
+.ref-table tr:last-child td { border-bottom: none; }
+.ref-table tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+.ref-table td:first-child { color: var(--text); font-family: var(--mono-font); font-size: 12px; }
+
+/* ─── CANVAS CONTAINERS ──────────────────────────────────────────────────── */
+.viz-container {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.viz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.viz-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.viz-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.viz-btn {
+  padding: 4px 12px;
+  border-radius: 5px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 11px;
+  font-family: var(--body-font);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.viz-btn:hover, .viz-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.viz-slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.viz-slider-wrap input[type=range] {
+  -webkit-appearance: none;
+  width: 90px; height: 4px;
+  background: var(--border2);
+  border-radius: 2px;
+  outline: none;
+}
+
+.viz-slider-wrap input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.viz-slider-wrap .val {
+  min-width: 28px;
+  text-align: right;
+  color: var(--accent);
+  font-family: var(--mono-font);
+  font-size: 11px;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+}
+
+.viz-caption {
+  padding: 10px 16px;
+  font-size: 12px;
+  color: var(--text3);
+  border-top: 1px solid var(--border);
+  font-style: italic;
+}
+
+/* ─── MACLAURIN TABLE ────────────────────────────────────────────────────── */
+.maclaurin-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mc-name {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.mc-formula {
+  font-family: var(--mono-font);
+  font-size: 13px;
+  color: var(--text);
+}
+
+.mc-domain {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+/* ─── PROGRESS TRACKER ───────────────────────────────────────────────────── */
+.progress-bar {
+  position: fixed;
+  top: 0; left: var(--sidebar-w); right: 0;
+  height: 2px;
+  background: var(--border);
+  z-index: 200;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  width: 0%;
+  transition: width 0.1s;
+}
+
+/* ─── MOBILE TOGGLE ──────────────────────────────────────────────────────── */
+.mobile-toggle {
+  display: none;
+  position: fixed;
+  bottom: 24px; right: 24px;
+  width: 48px; height: 48px;
+  background: var(--accent);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 300;
+  box-shadow: 0 4px 20px rgba(79,142,247,0.4);
+}
+
+@media (max-width: 900px) {
+  :root { --sidebar-w: 0px; }
+  #sidebar { transform: translateX(-280px); width: 280px; transition: transform 0.3s; }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; }
+  .content { padding: 32px 24px; }
+  .hero { padding: 48px 24px 40px; }
+  .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+  .progress-bar { left: 0; }
+}
+
+/* ─── KATEX overrides ────────────────────────────────────────────────────── */
+.katex { color: var(--text) !important; }
+.formula-block .katex-display { margin: 0 !important; }
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+
+/* ─── Two-col grid for formulas ──────────────────────────────────────────── */
+.formula-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+@media (max-width: 700px) {
+  .formula-2col { grid-template-columns: 1fr; }
+}
+
+.f2 {
+  background: var(--formula-bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent2);
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+.f2 .lbl {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 5px;
+}
+
+/* ─── series test badges ─────────────────────────────────────────────────── */
+.test-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.conv { background: rgba(0,212,170,0.1); color: var(--accent3); }
+.div  { background: rgba(247,95,123,0.1); color: var(--accent5); }
+.inc  { background: rgba(247,168,79,0.1); color: var(--accent4); }
+
+/* unit color themes */
+.u1 { --uc: var(--accent); }
+.u2 { --uc: #7b5ff5; }
+.u3 { --uc: #00d4aa; }
+.u4 { --uc: #f7a84f; }
+.u5 { --uc: #f75f7b; }
+.u6 { --uc: #5bd4f7; }
+.u7 { --uc: #b8f75f; }
+.u8 { --uc: #f7d45f; }
+.u9 { --uc: #d45ff7; }
+.u10 { --uc: #f75faf; }
+
+.section-num { background: rgba(var(--uc-rgb, 79,142,247), 0.12); color: var(--uc, var(--accent)); border: 1px solid rgba(var(--uc-rgb, 79,142,247), 0.2); }
+.section-title { color: var(--text); }
+
+/* sub-section */
+.subsection {
+  margin-top: 28px;
+}
+
+.subsection h4 {
+  font-family: var(--heading-font);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<!-- ── SIDEBAR ────────────────────────────────────────────────────────────── -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">AP <span>Calc</span> BC</div>
+    <div class="sidebar-sub">Complete Reference</div>
+  </div>
+  <div class="sidebar-search">
+    <input type="text" id="searchInput" placeholder="Search topics..." autocomplete="off">
+  </div>
+  <div id="navList">
+    <div class="nav-unit">
+      <div class="nav-unit-label"><span>01</span> Limits & Continuity</div>
+      <a class="nav-link" href="#s1-limits"><span class="dot"></span>What Is a Limit?</a>
+      <a class="nav-link" href="#s1-one-sided"><span class="dot"></span>One-Sided Limits</a>
+      <a class="nav-link" href="#s1-special"><span class="dot"></span>Special Trig Limits</a>
+      <a class="nav-link" href="#s1-indeterminate"><span class="dot"></span>Indeterminate Forms</a>
+      <a class="nav-link" href="#s1-continuity"><span class="dot"></span>Continuity & IVT</a>
+    </div>
+    <div class="nav-unit">
+      <div class="nav-unit-label"><span>02</span> Differentiation</div>
+      <a class="nav-link" href="#s2-definition"><span class="dot"></span>Definition of Derivative</a>
+      <a class="nav-link" href="#s2-rules"><span class="dot"></span>All Derivative Rules</a>
+      <a class="nav-link" href="#s2-trig"><span class="dot"></span>Trig Derivatives</a>
+      <a class="nav-link" href="#s2-exp"><span class="dot"></span>Exp & Log Derivatives</a>
+      <a class="nav-link" href="#s2-inverse-trig"><span class="dot"></span>Inverse Trig</a>
+    </div>
+    <div class="nav-unit">
+      <div class="nav-unit-label"><span>03</span> Advanced Differentiation</div>
+      <a class="nav-link" href="#s3-implicit"><span class="dot"></span>Implicit Differentiation</a>
+      <a class="nav-link" href="#s3-inverse"><span class="dot"></span>Inverse Functions</a>
+      <a class="nav-link" href="#s3-log"><span class="dot"></span>Logarithmic Diff.</a>
+    </div>
+    <div class="nav-unit">
+      <div class="nav-unit-label"><span>04</span> Applied Derivatives</div>
+      <a class="nav-link" href="#s4-motion"><span class="dot"></span>Motion & Rates</a>
+      <a class="nav-link" href="#s4-tangent"><span class="dot"></span>Tangent Lines</a>
+      <a class="nav-link" href="#s4-lhopital"><span class="dot"></span>L'Hôpital's Rule</a>
+      <a class="nav-link" href="#s4-related"><span class="dot"></span>Related Rates</a>
+    </div>
+    <div class="nav-unit">
+      <div class="nav-unit-label"><span>05</span> Analytical Applications</div>
+      <a class="nav-link" href="#s5-mvt"><span class="dot"></span>MVT & EVT</a>
+      <a class="nav-link" href="#s5-critical"><span class="dot"></span>Critical Points</a>
+      <a class="nav-link" href="#s5-concavity"><span class="dot"></span>Concavity</a>
+      <a class="nav-link" href="#s5-optimization"><span class="dot"></span>Optimization</a>
+    </div>
+    <div class="nav-unit">
+      <div class="nav-unit-label"><span>06</span> Integration</div>
+      <a class="nav-link" href="#s6-riemann"><span class="dot"></span>Riemann Sums</a>
+      <a class="nav-link" href="#s6-ftc"><span class="dot"></span>FTC Parts 1 & 2</a>
+      <a class="nav-link" href="#s6-antideriv"><span class="dot"></span>Antiderivatives</a>
+      <a class="nav-link" href="#s6-techniques"><span class="dot"></span>Integration Techniques</a>
+      <a class="nav-link" href="#s6-improper"><span class="dot"></span>Improper Integrals</a>
+    </div>
+    <div class="nav-unit">
+      <div class="nav-unit-label"><span>07</span> Differential Equations</div>
+      <a class="nav-link" href="#s7-slope"><span class="dot"></span>Slope Fields</a>
+      <a class="nav-link" href="#s7-separable"><span class="dot"></span>Separable DEs</a>
+      <a class="nav-link" href="#s7-logistic"><span class="dot"></span>Logistic Growth</a>
+      <a class="nav-link" href="#s7-euler"><span class="dot"></span>Euler's Method</a>
+    </div>
+    <div class="nav-unit">
+      <div class="nav-unit-label"><span>08</span> Applications of Integration</div>
+      <a class="nav-link" href="#s8-area"><span class="dot"></span>Area Between Curves</a>
+      <a class="nav-link" href="#s8-volumes"><span class="dot"></span>Volumes</a>
+      <a class="nav-link" href="#s8-arclength"><span class="dot"></span>Arc Length</a>
+    </div>
+    <div class="nav-unit">
+      <div class="nav-unit-label"><span>09</span> Parametric, Polar, Vector</div>
+      <a class="nav-link" href="#s9-parametric"><span class="dot"></span>Parametric</a>
+      <a class="nav-link" href="#s9-polar"><span class="dot"></span>Polar Coordinates</a>
+      <a class="nav-link" href="#s9-vector"><span class="dot"></span>Vector Functions</a>
+    </div>
+    <div class="nav-unit">
+      <div class="nav-unit-label"><span>10</span> Series</div>
+      <a class="nav-link" href="#s10-sequences"><span class="dot"></span>Sequences & Series</a>
+      <a class="nav-link" href="#s10-tests"><span class="dot"></span>Convergence Tests</a>
+      <a class="nav-link" href="#s10-power"><span class="dot"></span>Power Series</a>
+      <a class="nav-link" href="#s10-taylor"><span class="dot"></span>Taylor & Maclaurin</a>
+      <a class="nav-link" href="#s10-error"><span class="dot"></span>Error Bounds</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── MAIN ───────────────────────────────────────────────────────────────── -->
+<main id="main">
+  <div class="hero">
+    <div class="hero-eyebrow">AP Exam Complete Reference</div>
+    <h1 class="hero-title">Calculus <em>BC</em></h1>
+    <p class="hero-sub">Every formula, every theorem, every concept — with interactive visualizations and full explanations. Built for the exam.</p>
+    <div class="hero-pills">
+      <span class="pill pill-blue">10 Units</span>
+      <span class="pill pill-purple">KaTeX Rendering</span>
+      <span class="pill pill-green">Interactive Graphs</span>
+      <span class="pill pill-orange">Exam Tips</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- UNIT 1 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section u1" id="unit1">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <h2 class="section-title">Limits &amp; Continuity</h2>
+  </div>
+
+  <div class="topic-card open" id="s1-limits">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>What Is a Limit?</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>A limit describes the value a function <em>approaches</em> as the input approaches some value — not necessarily what the function equals there.</p>
+      <div class="formula-block"><div class="math">\lim_{x \to c} f(x) = L</div></div>
+      <p>Formal epsilon-delta definition: for every \(\varepsilon > 0\) there exists \(\delta > 0\) such that \(0 < |x - c| < \delta \Rightarrow |f(x) - L| < \varepsilon\).</p>
+      <div class="callout callout-note"><div class="callout-icon">◈</div><div class="callout-body"><strong>Key Insight</strong>The limit describes behavior as \(x \to c\), completely ignoring the value <em>at</em> \(c\). The function doesn't even need to be defined at \(c\).</div></div>
+
+      <div class="viz-container">
+        <div class="viz-header">
+          <span class="viz-title">Limit Visualization</span>
+          <div class="viz-controls">
+            <div class="viz-slider-wrap">c = <input type="range" id="limitC" min="-2" max="3" step="0.1" value="1"><span class="val" id="limitCVal">1.0</span></div>
+          </div>
+        </div>
+        <canvas id="limitCanvas" height="300"></canvas>
+        <div class="viz-caption">The red dot shows the point being approached; the open circle shows the actual function value may differ.</div>
+      </div>
+
+      <p>Limit laws — if \(\lim_{x\to c} f(x) = L\) and \(\lim_{x\to c} g(x) = M\):</p>
+      <div class="formula-group">
+        <div class="formula-group-title">Limit Laws</div>
+        <div class="formula-row"><span class="lhs math">\lim[f \pm g] = L \pm M</span><span class="rhs">Sum / Difference</span></div>
+        <div class="formula-row"><span class="lhs math">\lim[f \cdot g] = LM</span><span class="rhs">Product</span></div>
+        <div class="formula-row"><span class="lhs math">\lim[f/g] = L/M,\; M\neq 0</span><span class="rhs">Quotient</span></div>
+        <div class="formula-row"><span class="lhs math">\lim[f^n] = L^n</span><span class="rhs">Power</span></div>
+        <div class="formula-row"><span class="lhs math">\lim[k \cdot f] = kL</span><span class="rhs">Scalar multiple</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s1-one-sided">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>One-Sided Limits</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-2col">
+        <div class="f2"><div class="lbl">Left-hand limit</div><div class="math">\lim_{x \to c^-} f(x) = L</div></div>
+        <div class="f2"><div class="lbl">Right-hand limit</div><div class="math">\lim_{x \to c^+} f(x) = L</div></div>
+      </div>
+      <div class="callout callout-key"><div class="callout-icon">★</div><div class="callout-body"><strong>Two-sided limit exists IFF both one-sided limits exist and are equal.</strong>\(\lim_{x\to c^-}f = \lim_{x\to c^+}f = L\)</div></div>
+
+      <div class="subsection"><h4>Squeeze Theorem</h4>
+        <p>If \(g(x) \le f(x) \le h(x)\) near \(c\), and \(\lim g = \lim h = L\), then \(\lim f = L\).</p>
+        <div class="formula-block"><div class="math">g(x) \le f(x) \le h(x) \;\text{and}\; \lim g = \lim h = L \;\Rightarrow\; \lim f = L</div></div>
+        <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">Classic example: \(\lim_{x\to 0} x^2\sin(1/x) = 0\) since \(-x^2 \le x^2\sin(1/x) \le x^2\).</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s1-special">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Special Trig Limits</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="callout callout-key"><div class="callout-icon">★</div><div class="callout-body"><strong>Memorize these cold — they appear constantly.</strong></div></div>
+      <div class="formula-block"><div class="math">\lim_{x \to 0} \frac{\sin x}{x} = 1</div></div>
+      <div class="formula-block"><div class="math">\lim_{x \to 0} \frac{1 - \cos x}{x} = 0</div></div>
+      <div class="formula-block"><div class="math">\lim_{x \to 0} \frac{1 - \cos x}{x^2} = \frac{1}{2}</div></div>
+      <p>For scaled versions: \(\displaystyle\lim_{x\to 0}\frac{\sin(5x)}{x} = 5\cdot\lim\frac{\sin(5x)}{5x} = 5\cdot 1 = 5\)</p>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s1-indeterminate">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Indeterminate Forms</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>These cannot be evaluated by direct substitution — they require algebraic manipulation or L'Hôpital's Rule.</p>
+      <table class="ref-table">
+        <tr><th>Form</th><th>Resolution Strategy</th></tr>
+        <tr><td>\(0/0\)</td><td>Factor &amp; cancel, rationalize, or L'Hôpital</td></tr>
+        <tr><td>\(\infty/\infty\)</td><td>L'Hôpital, or divide by highest power</td></tr>
+        <tr><td>\(0 \cdot \infty\)</td><td>Rewrite as \(0/(1/\infty)\) then L'Hôpital</td></tr>
+        <tr><td>\(\infty - \infty\)</td><td>Combine fractions or factor</td></tr>
+        <tr><td>\(1^\infty\)</td><td>Take ln, apply L'Hôpital, exponentiate</td></tr>
+        <tr><td>\(0^0\)</td><td>Take ln, apply L'Hôpital, exponentiate</td></tr>
+        <tr><td>\(\infty^0\)</td><td>Take ln, apply L'Hôpital, exponentiate</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s1-continuity">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Continuity &amp; IVT</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>\(f\) is continuous at \(x=c\) iff all three conditions hold:</p>
+      <ul class="concept-list">
+        <li>\(f(c)\) is defined</li>
+        <li>\(\lim_{x\to c} f(x)\) exists</li>
+        <li>\(\lim_{x\to c} f(x) = f(c)\)</li>
+      </ul>
+      <div class="subsection"><h4>Types of Discontinuities</h4>
+        <table class="ref-table">
+          <tr><th>Type</th><th>Cause</th><th>Fixable?</th></tr>
+          <tr><td>Removable (hole)</td><td>Limit exists but ≠ f(c)</td><td>Yes — redefine f(c)</td></tr>
+          <tr><td>Jump</td><td>Left ≠ right one-sided limit</td><td>No</td></tr>
+          <tr><td>Infinite</td><td>Limit = ±∞ (VA)</td><td>No</td></tr>
+          <tr><td>Oscillating</td><td>e.g. sin(1/x) at 0</td><td>No</td></tr>
+        </table>
+      </div>
+      <div class="subsection"><h4>Intermediate Value Theorem (IVT)</h4>
+        <p>If \(f\) is continuous on \([a,b]\) and \(N\) is between \(f(a)\) and \(f(b)\), then \(\exists c \in (a,b)\) with \(f(c)=N\).</p>
+        <div class="formula-block"><div class="math">f \text{ cont. on } [a,b],\; f(a) < N < f(b) \;\Rightarrow\; \exists c \in (a,b): f(c)=N</div></div>
+        <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">To prove a root exists: show f is continuous and f(a), f(b) have opposite signs — then IVT guarantees a zero.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- UNIT 2 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section u2" id="unit2">
+  <div class="section-header">
+    <div class="section-num" style="--uc:#7b5ff5">02</div>
+    <h2 class="section-title">Differentiation — Definitions &amp; Rules</h2>
+  </div>
+
+  <div class="topic-card open" id="s2-definition">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Definition of the Derivative</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>The derivative is the instantaneous rate of change — geometrically, the slope of the tangent line.</p>
+      <div class="formula-block"><div class="math">f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}</div></div>
+      <div class="formula-block"><div class="math">f'(a) = \lim_{x \to a} \frac{f(x) - f(a)}{x - a}</div></div>
+
+      <div class="viz-container">
+        <div class="viz-header">
+          <span class="viz-title">Tangent Line — Moving Secant</span>
+          <div class="viz-controls">
+            <div class="viz-slider-wrap">x = <input type="range" id="tanX" min="-2.5" max="2.5" step="0.05" value="0.5"><span class="val" id="tanXVal">0.5</span></div>
+            <div class="viz-slider-wrap">h = <input type="range" id="tanH" min="0.05" max="2" step="0.05" value="1"><span class="val" id="tanHVal">1.0</span></div>
+          </div>
+        </div>
+        <canvas id="tanCanvas" height="300"></canvas>
+        <div class="viz-caption">Blue = function, orange = secant line, red = tangent line. As h→0, the secant approaches the tangent.</div>
+      </div>
+
+      <div class="callout callout-warn"><div class="callout-icon">⚠</div><div class="callout-body"><strong>Non-differentiable points:</strong> corners (different slopes from left/right), cusps (slopes → ±∞ from opposite sides), vertical tangents, and any discontinuity.</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s2-rules">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>All Derivative Rules</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-group">
+        <div class="formula-group-title">Basic Rules</div>
+        <div class="formula-row"><span class="lhs math">\frac{d}{dx}[c] = 0</span><span class="rhs">Constant</span></div>
+        <div class="formula-row"><span class="lhs math">\frac{d}{dx}[x^n] = nx^{n-1}</span><span class="rhs">Power (all real n)</span></div>
+        <div class="formula-row"><span class="lhs math">\frac{d}{dx}[cf] = cf'</span><span class="rhs">Constant multiple</span></div>
+        <div class="formula-row"><span class="lhs math">\frac{d}{dx}[f\pm g] = f' \pm g'</span><span class="rhs">Sum/difference</span></div>
+      </div>
+      <div class="formula-group">
+        <div class="formula-group-title">Product &amp; Quotient</div>
+        <div class="formula-row"><span class="lhs math">\frac{d}{dx}[fg] = f'g + fg'</span><span class="rhs">Product rule</span></div>
+        <div class="formula-row"><span class="lhs math">\frac{d}{dx}\!\left[\frac{f}{g}\right] = \frac{f'g - fg'}{g^2}</span><span class="rhs">Quotient rule (lo·d(hi) − hi·d(lo), over lo²)</span></div>
+      </div>
+      <div class="formula-block"><div class="math">\frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)</div></div>
+      <div class="callout callout-key"><div class="callout-icon">★</div><div class="callout-body"><strong>Chain Rule</strong> — the most-used rule on the exam. Every function with something "inside" uses it. Derivative of outside, keep inside, times derivative of inside.</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s2-trig">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Trig Derivatives — All 6</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-2col">
+        <div class="f2"><div class="lbl">sin</div><div class="math">\frac{d}{dx}\sin x = \cos x</div></div>
+        <div class="f2"><div class="lbl">cos</div><div class="math">\frac{d}{dx}\cos x = -\sin x</div></div>
+        <div class="f2"><div class="lbl">tan</div><div class="math">\frac{d}{dx}\tan x = \sec^2 x</div></div>
+        <div class="f2"><div class="lbl">cot</div><div class="math">\frac{d}{dx}\cot x = -\csc^2 x</div></div>
+        <div class="f2"><div class="lbl">sec</div><div class="math">\frac{d}{dx}\sec x = \sec x\tan x</div></div>
+        <div class="f2"><div class="lbl">csc</div><div class="math">\frac{d}{dx}\csc x = -\csc x\cot x</div></div>
+      </div>
+      <div class="callout callout-warn"><div class="callout-icon">⚠</div><div class="callout-body">cot, csc, cos — the "co-" functions all have <strong>negative</strong> derivatives. Don't forget the negatives.</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s2-exp">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Exponential &amp; Log Derivatives</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-2col">
+        <div class="f2"><div class="lbl">Natural exp</div><div class="math">\frac{d}{dx}e^x = e^x</div></div>
+        <div class="f2"><div class="lbl">General exp</div><div class="math">\frac{d}{dx}a^x = a^x\ln a</div></div>
+        <div class="f2"><div class="lbl">Natural log</div><div class="math">\frac{d}{dx}\ln x = \frac{1}{x}</div></div>
+        <div class="f2"><div class="lbl">Log base a</div><div class="math">\frac{d}{dx}\log_a x = \frac{1}{x\ln a}</div></div>
+      </div>
+      <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">With chain rule: \(\frac{d}{dx}\ln(g(x)) = \frac{g'(x)}{g(x)}\). This is the key form for u-sub in integration.</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s2-inverse-trig">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Inverse Trig Derivatives — All 6</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-2col">
+        <div class="f2"><div class="lbl">arcsin</div><div class="math">\frac{d}{dx}\arcsin x = \frac{1}{\sqrt{1-x^2}}</div></div>
+        <div class="f2"><div class="lbl">arccos</div><div class="math">\frac{d}{dx}\arccos x = \frac{-1}{\sqrt{1-x^2}}</div></div>
+        <div class="f2"><div class="lbl">arctan</div><div class="math">\frac{d}{dx}\arctan x = \frac{1}{1+x^2}</div></div>
+        <div class="f2"><div class="lbl">arccot</div><div class="math">\frac{d}{dx}\text{arccot}\, x = \frac{-1}{1+x^2}</div></div>
+        <div class="f2"><div class="lbl">arcsec</div><div class="math">\frac{d}{dx}\text{arcsec}\, x = \frac{1}{|x|\sqrt{x^2-1}}</div></div>
+        <div class="f2"><div class="lbl">arccsc</div><div class="math">\frac{d}{dx}\text{arccsc}\, x = \frac{-1}{|x|\sqrt{x^2-1}}</div></div>
+      </div>
+      <div class="callout callout-note"><div class="callout-icon">◈</div><div class="callout-body">Co-pairs (arccos/arcsin, arccot/arctan, arccsc/arcsec) are negatives of each other.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- UNIT 3 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section u3" id="unit3">
+  <div class="section-header">
+    <div class="section-num" style="--uc:#00d4aa">03</div>
+    <h2 class="section-title">Advanced Differentiation</h2>
+  </div>
+
+  <div class="topic-card open" id="s3-implicit">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Implicit Differentiation</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>Use when \(y\) is not isolated. Differentiate both sides w.r.t. \(x\). Every time a term with \(y\) is differentiated, multiply by \(\frac{dy}{dx}\) (chain rule). Then solve for \(\frac{dy}{dx}\).</p>
+      <div class="formula-block"><div class="math">x^2 + y^2 = 25 \;\Rightarrow\; 2x + 2y\frac{dy}{dx} = 0 \;\Rightarrow\; \frac{dy}{dx} = -\frac{x}{y}</div></div>
+      <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">Second implicit derivatives: differentiate dy/dx again w.r.t. x, then substitute the first dy/dx expression to eliminate it.</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s3-inverse">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Derivatives of Inverse Functions</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>If \(f\) and \(g\) are inverses, then:</p>
+      <div class="formula-block"><div class="math">g'(x) = \frac{1}{f'(g(x))}</div></div>
+      <p>On the exam: if \(f(a) = b\), then \(g(b) = a\), so \(g'(b) = \dfrac{1}{f'(a)}\).</p>
+      <div class="callout callout-note"><div class="callout-icon">◈</div><div class="callout-body">Geometrically: the tangent slope of \(f^{-1}\) at \((b,a)\) is the reciprocal of the slope of \(f\) at \((a,b)\). The graphs are reflections across \(y=x\).</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s3-log">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Logarithmic Differentiation</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>Used for \([f(x)]^{g(x)}\) — variable to a variable power. Take \(\ln\) of both sides, differentiate implicitly, solve for \(y'\).</p>
+      <div class="formula-block"><div class="math">y = f(x)^{g(x)} \;\Rightarrow\; \ln y = g(x)\ln f(x) \;\Rightarrow\; \frac{y'}{y} = g'\ln f + g\cdot\frac{f'}{f}</div></div>
+      <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">Also useful for long products/quotients — taking ln converts multiplication to addition, making differentiation much cleaner.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- UNIT 4 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="unit4">
+  <div class="section-header">
+    <div class="section-num" style="--uc:#f7a84f">04</div>
+    <h2 class="section-title">Contextual Applications of Differentiation</h2>
+  </div>
+
+  <div class="topic-card open" id="s4-motion">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Position, Velocity, Acceleration</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-group">
+        <div class="formula-group-title">Motion Relationships</div>
+        <div class="formula-row"><span class="lhs math">v(t) = s'(t)</span><span class="rhs">Velocity = derivative of position</span></div>
+        <div class="formula-row"><span class="lhs math">a(t) = v'(t) = s''(t)</span><span class="rhs">Acceleration = derivative of velocity</span></div>
+        <div class="formula-row"><span class="lhs math">\text{speed} = |v(t)|</span><span class="rhs">Always non-negative</span></div>
+      </div>
+      <ul class="concept-list">
+        <li>Particle speeds up when \(v(t)\) and \(a(t)\) have the <strong>same sign</strong></li>
+        <li>Particle slows down when they have <strong>opposite signs</strong></li>
+        <li>Displacement = \(\int_a^b v(t)\,dt\) (signed)</li>
+        <li>Total distance = \(\int_a^b |v(t)|\,dt\) (split at zeros of v)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s4-tangent">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Tangent Lines &amp; Linear Approximation</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-block"><div class="math">y - f(a) = f'(a)(x - a)</div></div>
+      <p>Normal line (perpendicular to tangent): slope \(= -1/f'(a)\).</p>
+      <div class="subsection"><h4>Linear Approximation (Linearization)</h4>
+        <div class="formula-block"><div class="math">f(x) \approx f(a) + f'(a)(x-a) \;\text{ for } x \text{ near } a</div></div>
+        <div class="callout callout-key"><div class="callout-icon">★</div><div class="callout-body"><strong>Over/under-estimate:</strong> Concave up (f'' > 0) → tangent is BELOW curve → linearization <em>underestimates</em>. Concave down → tangent ABOVE → <em>overestimates</em>.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s4-lhopital">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>L'Hôpital's Rule</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>If a limit yields \(0/0\) or \(\infty/\infty\) after direct substitution:</p>
+      <div class="formula-block"><div class="math">\lim_{x\to c}\frac{f(x)}{g(x)} = \lim_{x\to c}\frac{f'(x)}{g'(x)} \quad \text{(when form is } 0/0 \text{ or } \infty/\infty\text{)}</div></div>
+      <div class="callout callout-warn"><div class="callout-icon">⚠</div><div class="callout-body">L'Hôpital applies ONLY to \(0/0\) or \(\infty/\infty\). For other indeterminate forms (\(0\cdot\infty\), \(1^\infty\), etc.), algebraically rewrite first.</div></div>
+      <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">After differentiating, re-check the form before applying again. You can apply repeatedly until you can substitute directly.</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s4-related">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Related Rates</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>Both variables change with time. Differentiate a relating equation with respect to \(t\), then plug in known values.</p>
+      <ul class="concept-list">
+        <li>Draw and label a diagram</li>
+        <li>Write an equation relating the variables</li>
+        <li>Differentiate both sides w.r.t. \(t\) (chain rule on every variable)</li>
+        <li>Substitute known rates and values</li>
+        <li>Solve for the unknown rate</li>
+      </ul>
+      <div class="formula-block"><div class="math">\text{Ladder: } x^2 + y^2 = L^2 \;\Rightarrow\; 2x\frac{dx}{dt} + 2y\frac{dy}{dt} = 0</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- UNIT 5 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="unit5">
+  <div class="section-header">
+    <div class="section-num" style="--uc:#f75f7b">05</div>
+    <h2 class="section-title">Analytical Applications of Differentiation</h2>
+  </div>
+
+  <div class="topic-card open" id="s5-mvt">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Mean Value Theorem &amp; EVT</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>If \(f\) is continuous on \([a,b]\) and differentiable on \((a,b)\), then \(\exists c \in (a,b)\):</p>
+      <div class="formula-block"><div class="math">f'(c) = \frac{f(b)-f(a)}{b-a}</div></div>
+      <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">FRQ justification: "Since f is continuous on [a,b] and differentiable on (a,b), by MVT there exists c in (a,b) such that f'(c) = [f(b)−f(a)]/(b−a)."</div></div>
+      <div class="subsection"><h4>Extreme Value Theorem (EVT)</h4>
+        <p>If \(f\) is continuous on a <strong>closed</strong> interval \([a,b]\), then \(f\) attains both a global max and min on \([a,b]\).</p>
+        <div class="callout callout-warn"><div class="callout-icon">⚠</div><div class="callout-body">EVT requires <em>closed</em> interval and <em>continuous</em> function. No guarantee on open intervals.</div></div>
+      </div>
+      <div class="subsection"><h4>Rolle's Theorem</h4>
+        <p>Special case of MVT: if \(f(a)=f(b)\), then \(\exists c\) with \(f'(c)=0\).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s5-critical">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Critical Points &amp; Derivative Tests</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>A critical point is any \(x\) in the domain where \(f'(x)=0\) or \(f'(x)\) DNE.</p>
+      <div class="subsection"><h4>First Derivative Test</h4>
+        <ul class="concept-list">
+          <li>\(f'\) changes \(+\to-\): local <strong>maximum</strong></li>
+          <li>\(f'\) changes \(-\to+\): local <strong>minimum</strong></li>
+          <li>\(f'\) doesn't change sign: neither</li>
+        </ul>
+      </div>
+      <div class="subsection"><h4>Second Derivative Test</h4>
+        <div class="formula-2col">
+          <div class="f2"><div class="lbl">When f'(c)=0</div><div class="math">f''(c) > 0 \Rightarrow \text{local min}</div></div>
+          <div class="f2"><div class="lbl">When f'(c)=0</div><div class="math">f''(c) < 0 \Rightarrow \text{local max}</div></div>
+        </div>
+        <div class="callout callout-warn"><div class="callout-icon">⚠</div><div class="callout-body">If \(f''(c) = 0\), the second derivative test is <strong>inconclusive</strong>. Use the first derivative test instead.</div></div>
+      </div>
+      <p>For <strong>global extrema</strong> on \([a,b]\): evaluate \(f\) at all critical points in \((a,b)\) AND at both endpoints \(a\) and \(b\). Largest = global max; smallest = global min.</p>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s5-concavity">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Concavity &amp; Inflection Points</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-2col">
+        <div class="f2"><div class="lbl">Concave Up</div><div class="math">f''(x) > 0</div><p style="margin:6px 0 0;font-size:12px;color:var(--text3)">Tangent line below curve</p></div>
+        <div class="f2"><div class="lbl">Concave Down</div><div class="math">f''(x) < 0</div><p style="margin:6px 0 0;font-size:12px;color:var(--text3)">Tangent line above curve</p></div>
+      </div>
+      <p>An <strong>inflection point</strong> is where concavity changes — \(f''\) changes sign. \(f''(c)=0\) is necessary but NOT sufficient.</p>
+      <div class="callout callout-warn"><div class="callout-icon">⚠</div><div class="callout-body">\(f''(c)=0\) does NOT guarantee an inflection point. You must verify \(f''\) actually <em>changes sign</em> at \(c\).</div></div>
+
+      <div class="viz-container">
+        <div class="viz-header">
+          <span class="viz-title">Concavity Explorer</span>
+          <div class="viz-controls">
+            <button class="viz-btn active" onclick="setConcavFunc(0,this)">x³−3x</button>
+            <button class="viz-btn" onclick="setConcavFunc(1,this)">sin(x)</button>
+            <button class="viz-btn" onclick="setConcavFunc(2,this)">x⁴−4x²</button>
+          </div>
+        </div>
+        <canvas id="concavCanvas" height="280"></canvas>
+        <div class="viz-caption">Blue shading = concave up (f''>0). Red shading = concave down (f''&lt;0). Inflection points marked with ◆.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s5-optimization">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Optimization</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <ul class="concept-list">
+        <li>Identify the quantity to maximize/minimize</li>
+        <li>Write it as a function of ONE variable (use constraint to eliminate others)</li>
+        <li>Find critical points in the domain</li>
+        <li>Verify with first or second derivative test</li>
+        <li>Check endpoints if domain is closed</li>
+      </ul>
+      <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">Always define variables and state the domain. Exam graders want to see explicit justification for why the critical point is a max or min.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- UNIT 6 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="unit6">
+  <div class="section-header">
+    <div class="section-num" style="--uc:#5bd4f7">06</div>
+    <h2 class="section-title">Integration &amp; Accumulation of Change</h2>
+  </div>
+
+  <div class="topic-card open" id="s6-riemann">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Riemann Sums</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-block"><div class="math">\sum_{i=1}^{n} f(x_i^*)\,\Delta x \;\xrightarrow{n\to\infty}\; \int_a^b f(x)\,dx</div></div>
+      <div class="viz-container">
+        <div class="viz-header">
+          <span class="viz-title">Riemann Sum Visualizer</span>
+          <div class="viz-controls">
+            <button class="viz-btn active" id="rsLeft" onclick="setRSType('left',this)">Left</button>
+            <button class="viz-btn" id="rsRight" onclick="setRSType('right',this)">Right</button>
+            <button class="viz-btn" id="rsMid" onclick="setRSType('mid',this)">Midpoint</button>
+            <button class="viz-btn" id="rsTrap" onclick="setRSType('trap',this)">Trapezoid</button>
+            <div class="viz-slider-wrap">n = <input type="range" id="rsN" min="2" max="40" step="1" value="6"><span class="val" id="rsNVal">6</span></div>
+          </div>
+        </div>
+        <canvas id="rsCanvas" height="300"></canvas>
+        <div class="viz-caption" id="rsCaption">Approximating ∫ sin(x)+1.2 dx on [0, π]. Estimated area shown.</div>
+      </div>
+      <div class="callout callout-note"><div class="callout-icon">◈</div><div class="callout-body">If \(f\) is <em>increasing</em>: Left underestimates, Right overestimates. If <em>decreasing</em>: Left overestimates, Right underestimates. Trapezoid is more accurate than either.</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s6-ftc">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Fundamental Theorem of Calculus</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="subsection"><h4>FTC Part 1 — Differentiation of Accumulation Functions</h4>
+        <div class="formula-block"><div class="math">\frac{d}{dx}\int_a^x f(t)\,dt = f(x)</div></div>
+        <div class="formula-block"><div class="math">\frac{d}{dx}\int_a^{u(x)} f(t)\,dt = f(u(x))\cdot u'(x)</div></div>
+        <div class="formula-block"><div class="math">\frac{d}{dx}\int_{v(x)}^{u(x)} f(t)\,dt = f(u(x))\,u'(x) - f(v(x))\,v'(x)</div></div>
+        <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">Plug the upper limit into f, multiply by the derivative of the upper limit. For a variable lower limit, subtract.</div></div>
+      </div>
+      <div class="subsection"><h4>FTC Part 2 — Evaluation Theorem</h4>
+        <div class="formula-block"><div class="math">\int_a^b f(x)\,dx = F(b) - F(a) \quad\text{where } F'=f</div></div>
+        <div class="callout callout-note"><div class="callout-icon">◈</div><div class="callout-body">The +C cancels when evaluating definite integrals, so you don't need it for F(b)−F(a).</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s6-antideriv">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>All Antiderivative Rules</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="callout callout-warn"><div class="callout-icon">⚠</div><div class="callout-body">Always include +C on indefinite integrals. Missing it on an FRQ costs points.</div></div>
+      <div class="formula-group">
+        <div class="formula-group-title">Basic Antiderivatives</div>
+        <div class="formula-row"><span class="lhs math">\int x^n\,dx = \frac{x^{n+1}}{n+1}+C,\; n\neq-1</span><span class="rhs">Reverse power rule</span></div>
+        <div class="formula-row"><span class="lhs math">\int \frac{1}{x}\,dx = \ln|x|+C</span><span class="rhs">Works for negative x</span></div>
+        <div class="formula-row"><span class="lhs math">\int e^x\,dx = e^x+C</span><span class="rhs"></span></div>
+        <div class="formula-row"><span class="lhs math">\int a^x\,dx = \frac{a^x}{\ln a}+C</span><span class="rhs"></span></div>
+        <div class="formula-row"><span class="lhs math">\int \sin x\,dx = -\cos x+C</span><span class="rhs"></span></div>
+        <div class="formula-row"><span class="lhs math">\int \cos x\,dx = \sin x+C</span><span class="rhs"></span></div>
+        <div class="formula-row"><span class="lhs math">\int \sec^2 x\,dx = \tan x+C</span><span class="rhs"></span></div>
+        <div class="formula-row"><span class="lhs math">\int \csc^2 x\,dx = -\cot x+C</span><span class="rhs"></span></div>
+        <div class="formula-row"><span class="lhs math">\int \sec x\tan x\,dx = \sec x+C</span><span class="rhs"></span></div>
+        <div class="formula-row"><span class="lhs math">\int \csc x\cot x\,dx = -\csc x+C</span><span class="rhs"></span></div>
+        <div class="formula-row"><span class="lhs math">\int \frac{1}{\sqrt{1-x^2}}\,dx = \arcsin x+C</span><span class="rhs"></span></div>
+        <div class="formula-row"><span class="lhs math">\int \frac{1}{1+x^2}\,dx = \arctan x+C</span><span class="rhs"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s6-techniques">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Integration Techniques</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="subsection"><h4>u-Substitution</h4>
+        <div class="formula-block"><div class="math">\int f(g(x))\,g'(x)\,dx = F(g(x))+C</div></div>
+        <p>Let \(u = g(x)\), compute \(du = g'(x)\,dx\), substitute, integrate in \(u\), back-substitute.</p>
+        <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">For definite integrals with u-sub: change the limits to u-values and don't back-substitute.</div></div>
+      </div>
+      <div class="subsection"><h4>Integration by Parts</h4>
+        <div class="formula-block"><div class="math">\int u\,dv = uv - \int v\,du</div></div>
+        <p><strong>LIATE</strong> priority for choosing \(u\): <strong>L</strong>ogarithm, <strong>I</strong>nverse trig, <strong>A</strong>lgebraic, <strong>T</strong>rig, <strong>E</strong>xponential.</p>
+        <div class="callout callout-note"><div class="callout-icon">◈</div><div class="callout-body"><strong>Loop technique:</strong> when the original integral reappears (e.g. \(\int e^x\sin x\,dx\)), move it to the other side and divide: \(2I = \text{result} \Rightarrow I = \text{result}/2\).</div></div>
+      </div>
+      <div class="subsection"><h4>Trig Substitution</h4>
+        <table class="ref-table">
+          <tr><th>Form</th><th>Substitution</th><th>Result</th></tr>
+          <tr><td>\(\sqrt{a^2-x^2}\)</td><td>\(x = a\sin\theta\)</td><td>\(\sqrt{} = a\cos\theta\)</td></tr>
+          <tr><td>\(\sqrt{a^2+x^2}\)</td><td>\(x = a\tan\theta\)</td><td>\(\sqrt{} = a\sec\theta\)</td></tr>
+          <tr><td>\(\sqrt{x^2-a^2}\)</td><td>\(x = a\sec\theta\)</td><td>\(\sqrt{} = a\tan\theta\)</td></tr>
+        </table>
+      </div>
+      <div class="subsection"><h4>Useful Trig Identities for Integration</h4>
+        <div class="formula-2col">
+          <div class="f2"><div class="math">\sin^2 x = \frac{1-\cos 2x}{2}</div></div>
+          <div class="f2"><div class="math">\cos^2 x = \frac{1+\cos 2x}{2}</div></div>
+          <div class="f2"><div class="math">1+\tan^2 x = \sec^2 x</div></div>
+          <div class="f2"><div class="math">\sin^2 x + \cos^2 x = 1</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s6-improper">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Improper Integrals</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-block"><div class="math">\int_a^{\infty} f(x)\,dx = \lim_{t\to\infty}\int_a^t f(x)\,dx</div></div>
+      <div class="formula-block"><div class="math">\int_{-\infty}^{\infty} f(x)\,dx = \int_{-\infty}^c f\,dx + \int_c^{\infty} f\,dx</div></div>
+      <div class="callout callout-key"><div class="callout-icon">★</div><div class="callout-body"><strong>p-series benchmark:</strong> \(\displaystyle\int_1^{\infty}\frac{1}{x^p}\,dx\) converges if \(p>1\), diverges if \(p\le 1\).</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- UNIT 7 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="unit7">
+  <div class="section-header">
+    <div class="section-num" style="--uc:#b8f75f">07</div>
+    <h2 class="section-title">Differential Equations</h2>
+  </div>
+
+  <div class="topic-card open" id="s7-slope">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Slope Fields</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>A slope field visualizes a DE by drawing a short segment at each point \((x,y)\) with slope \(= dy/dx\). Solution curves are tangent to every segment they pass through.</p>
+      <div class="viz-container">
+        <div class="viz-header">
+          <span class="viz-title">Slope Field Explorer</span>
+          <div class="viz-controls">
+            <button class="viz-btn active" onclick="setSlopeDE(0,this)">dy/dx = x</button>
+            <button class="viz-btn" onclick="setSlopeDE(1,this)">dy/dx = y</button>
+            <button class="viz-btn" onclick="setSlopeDE(2,this)">dy/dx = x−y</button>
+            <button class="viz-btn" onclick="setSlopeDE(3,this)">dy/dx = xy</button>
+          </div>
+        </div>
+        <canvas id="slopeCanvas" height="340"></canvas>
+        <div class="viz-caption">Click on the canvas to draw a solution curve through that point.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s7-separable">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Separable Differential Equations</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>A DE is separable if it can be written as \(h(y)\,dy = g(x)\,dx\). Then integrate both sides.</p>
+      <div class="formula-block"><div class="math">\frac{dy}{dx} = \frac{g(x)}{h(y)} \;\Rightarrow\; \int h(y)\,dy = \int g(x)\,dx</div></div>
+      <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">After solving, check your answer by differentiating and verifying it satisfies the original DE. Apply initial conditions to find C, then solve for y explicitly if possible.</div></div>
+      <div class="subsection"><h4>Exponential Growth &amp; Decay</h4>
+        <p>The DE \(\frac{dy}{dt} = ky\) has the solution:</p>
+        <div class="formula-block"><div class="math">y = y_0 e^{kt}</div></div>
+        <ul class="concept-list">
+          <li>\(k > 0\): exponential growth</li>
+          <li>\(k < 0\): exponential decay</li>
+          <li>Half-life: \(t_{1/2} = -\ln 2/k\)</li>
+          <li>Doubling time: \(t_d = \ln 2/k\)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s7-logistic">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Logistic Growth</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-block"><div class="math">\frac{dy}{dt} = ky\!\left(1 - \frac{y}{L}\right)</div></div>
+      <div class="formula-block"><div class="math">y(t) = \frac{L}{1+Ae^{-kt}}, \quad A = \frac{L-y_0}{y_0}</div></div>
+      <div class="callout callout-key"><div class="callout-icon">★</div><div class="callout-body"><strong>Growth is fastest at \(y = L/2\)</strong> — this is the inflection point of the S-curve. At \(y=L/2\), \(dy/dt\) is maximized.</div></div>
+      <ul class="concept-list">
+        <li>\(y=0\) and \(y=L\) are equilibrium solutions</li>
+        <li>Population never exceeds \(L\) if it starts below \(L\)</li>
+        <li>\(L\) = carrying capacity</li>
+      </ul>
+      <div class="viz-container">
+        <div class="viz-header">
+          <span class="viz-title">Logistic Growth Curve</span>
+          <div class="viz-controls">
+            <div class="viz-slider-wrap">k = <input type="range" id="logK" min="0.1" max="2" step="0.05" value="0.5"><span class="val" id="logKVal">0.5</span></div>
+            <div class="viz-slider-wrap">y₀ = <input type="range" id="logY0" min="2" max="90" step="1" value="10"><span class="val" id="logY0Val">10</span></div>
+          </div>
+        </div>
+        <canvas id="logisticCanvas" height="280"></canvas>
+        <div class="viz-caption">Dashed line = carrying capacity L=100. Red dot = inflection point at y=L/2.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s7-euler">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Euler's Method</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-block"><div class="math">y_{n+1} = y_n + F(x_n, y_n)\cdot\Delta x</div></div>
+      <p>Numerically approximates a solution by stepping along tangent lines from the initial point.</p>
+      <div class="callout callout-warn"><div class="callout-icon">⚠</div><div class="callout-body">Concave up: Euler's method <em>underestimates</em> (tangent below curve). Concave down: <em>overestimates</em>. Smaller Δx → more accurate.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- UNIT 8 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="unit8">
+  <div class="section-header">
+    <div class="section-num" style="--uc:#f7d45f">08</div>
+    <h2 class="section-title">Applications of Integration</h2>
+  </div>
+
+  <div class="topic-card open" id="s8-area">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Area Between Curves</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-block"><div class="math">A = \int_a^b \bigl[f(x) - g(x)\bigr]\,dx \quad (f \ge g)</div></div>
+      <div class="formula-block"><div class="math">A = \int_c^d \bigl[R(y) - L(y)\bigr]\,dy \quad \text{(horizontal slices)}</div></div>
+      <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">Always integrate [top − bottom] (or [right − left] for horizontal). Find intersection points by setting f(x) = g(x). Split into sub-integrals if the curves cross.</div></div>
+      <div class="callout callout-note"><div class="callout-icon">◈</div><div class="callout-body">Average value of \(f\) on \([a,b]\): \(\displaystyle\bar{f} = \frac{1}{b-a}\int_a^b f(x)\,dx\)</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s8-volumes">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Volumes of Revolution &amp; Cross Sections</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="subsection"><h4>Disk Method (no gap)</h4>
+        <div class="formula-block"><div class="math">V = \pi\int_a^b [f(x)]^2\,dx</div></div>
+      </div>
+      <div class="subsection"><h4>Washer Method (gap between two curves)</h4>
+        <div class="formula-block"><div class="math">V = \pi\int_a^b \bigl([R(x)]^2 - [r(x)]^2\bigr)\,dx</div></div>
+        <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">When rotating about \(y=k\), the radius from the axis to each curve is \(|f(x)-k|\) and \(|g(x)-k|\).</div></div>
+      </div>
+      <div class="subsection"><h4>Shell Method</h4>
+        <div class="formula-block"><div class="math">V = 2\pi\int_a^b x\cdot f(x)\,dx \quad \text{(about y-axis)}</div></div>
+        <div class="formula-block"><div class="math">V = 2\pi\int_a^b (x-k)\cdot f(x)\,dx \quad \text{(about }x=k\text{)}</div></div>
+      </div>
+      <div class="subsection"><h4>Cross-Sectional Volumes</h4>
+        <div class="formula-block"><div class="math">V = \int_a^b A(x)\,dx</div></div>
+        <table class="ref-table">
+          <tr><th>Cross Section</th><th>Area A(x)</th></tr>
+          <tr><td>Square</td><td>\([f(x)]^2\)</td></tr>
+          <tr><td>Semicircle</td><td>\(\frac{\pi}{8}[f(x)]^2\)</td></tr>
+          <tr><td>Equilateral triangle</td><td>\(\frac{\sqrt{3}}{4}[f(x)]^2\)</td></tr>
+          <tr><td>Isosceles right triangle</td><td>\(\frac{1}{2}[f(x)]^2\)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s8-arclength">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Arc Length</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-block"><div class="math">L = \int_a^b \sqrt{1 + [f'(x)]^2}\,dx</div></div>
+      <div class="formula-block"><div class="math">L = \int_c^d \sqrt{1 + [g'(y)]^2}\,dy</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- UNIT 9 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="unit9">
+  <div class="section-header">
+    <div class="section-num" style="--uc:#d45ff7">09</div>
+    <h2 class="section-title">Parametric, Polar &amp; Vector-Valued Functions</h2>
+  </div>
+
+  <div class="topic-card open" id="s9-parametric">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Parametric Equations</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>A parametric curve is defined by \(x=f(t)\) and \(y=g(t)\).</p>
+      <div class="formula-group">
+        <div class="formula-group-title">Derivatives</div>
+        <div class="formula-row"><span class="lhs math">\dfrac{dy}{dx} = \dfrac{dy/dt}{dx/dt}</span><span class="rhs">First derivative (slope)</span></div>
+        <div class="formula-row"><span class="lhs math">\dfrac{d^2y}{dx^2} = \dfrac{\frac{d}{dt}\!\left(\frac{dy}{dx}\right)}{dx/dt}</span><span class="rhs">Second derivative</span></div>
+      </div>
+      <div class="callout callout-warn"><div class="callout-icon">⚠</div><div class="callout-body">\(d^2y/dx^2 \ne (d^2y/dt^2)/(d^2x/dt^2)\). You must differentiate \(dy/dx\) with respect to \(t\), then divide by \(dx/dt\).</div></div>
+      <div class="formula-block"><div class="math">L = \int_a^b\sqrt{\!\left(\frac{dx}{dt}\right)^{\!2}+\left(\frac{dy}{dt}\right)^{\!2}}\,dt \quad \text{(arc length)}</div></div>
+
+      <div class="viz-container">
+        <div class="viz-header">
+          <span class="viz-title">Parametric Curve Explorer</span>
+          <div class="viz-controls">
+            <button class="viz-btn active" onclick="setParamCurve(0,this)">Ellipse</button>
+            <button class="viz-btn" onclick="setParamCurve(1,this)">Lissajous</button>
+            <button class="viz-btn" onclick="setParamCurve(2,this)">Cycloid</button>
+            <button class="viz-btn" onclick="setParamCurve(3,this)">Rose</button>
+          </div>
+        </div>
+        <canvas id="paramCanvas" height="300"></canvas>
+        <div class="viz-caption" id="paramCaption">Ellipse: x = 2cos(t), y = sin(t). Tangent line shown at moving point.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s9-polar">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Polar Coordinates</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-2col">
+        <div class="f2"><div class="lbl">Conversion</div><div class="math">x = r\cos\theta,\quad y = r\sin\theta</div></div>
+        <div class="f2"><div class="lbl">Inverse</div><div class="math">r^2 = x^2+y^2,\quad \tan\theta = y/x</div></div>
+      </div>
+      <div class="formula-block"><div class="math">A = \frac{1}{2}\int_\alpha^\beta r^2\,d\theta \quad \text{(polar area)}</div></div>
+      <div class="formula-block"><div class="math">A = \frac{1}{2}\int_\alpha^\beta\!\left(r_{\text{outer}}^2 - r_{\text{inner}}^2\right)d\theta \quad \text{(between curves)}</div></div>
+      <div class="formula-block"><div class="math">L = \int_\alpha^\beta\sqrt{r^2+\!\left(\frac{dr}{d\theta}\right)^{\!2}}\,d\theta \quad \text{(arc length)}</div></div>
+      <table class="ref-table" style="margin-top:12px">
+        <tr><th>Curve</th><th>Equation</th></tr>
+        <tr><td>Circle (origin)</td><td>\(r = a\)</td></tr>
+        <tr><td>Circle (offset)</td><td>\(r = a\cos\theta\) or \(r=a\sin\theta\)</td></tr>
+        <tr><td>Cardioid</td><td>\(r = a(1\pm\cos\theta)\) or \(a(1\pm\sin\theta)\)</td></tr>
+        <tr><td>Limaçon</td><td>\(r = a+b\cos\theta\)</td></tr>
+        <tr><td>Rose (n petals if n odd)</td><td>\(r = a\cos(n\theta)\)</td></tr>
+        <tr><td>Rose (2n petals if n even)</td><td>\(r = a\cos(n\theta)\)</td></tr>
+        <tr><td>Spiral</td><td>\(r = a\theta\)</td></tr>
+      </table>
+      <div class="viz-container">
+        <div class="viz-header">
+          <span class="viz-title">Polar Curve Explorer</span>
+          <div class="viz-controls">
+            <button class="viz-btn active" onclick="setPolarCurve(0,this)">Cardioid</button>
+            <button class="viz-btn" onclick="setPolarCurve(1,this)">Rose (3)</button>
+            <button class="viz-btn" onclick="setPolarCurve(2,this)">Rose (4)</button>
+            <button class="viz-btn" onclick="setPolarCurve(3,this)">Limaçon</button>
+            <button class="viz-btn" onclick="setPolarCurve(4,this)">Spiral</button>
+          </div>
+        </div>
+        <canvas id="polarCanvas" height="320"></canvas>
+        <div class="viz-caption" id="polarCaption">Area swept is shaded as θ increases.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s9-vector">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Vector-Valued Functions</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-group">
+        <div class="formula-group-title">Definitions</div>
+        <div class="formula-row"><span class="lhs math">\mathbf{r}(t) = \langle x(t),\, y(t)\rangle</span><span class="rhs">Position vector</span></div>
+        <div class="formula-row"><span class="lhs math">\mathbf{v}(t) = \mathbf{r}'(t) = \langle x'(t),\, y'(t)\rangle</span><span class="rhs">Velocity</span></div>
+        <div class="formula-row"><span class="lhs math">\mathbf{a}(t) = \mathbf{r}''(t) = \langle x''(t),\, y''(t)\rangle</span><span class="rhs">Acceleration</span></div>
+        <div class="formula-row"><span class="lhs math">|\mathbf{v}(t)| = \sqrt{[x'(t)]^2+[y'(t)]^2}</span><span class="rhs">Speed</span></div>
+      </div>
+      <div class="formula-block"><div class="math">\int\mathbf{r}(t)\,dt = \left\langle\int x(t)\,dt,\;\int y(t)\,dt\right\rangle + \mathbf{C}</div></div>
+      <div class="formula-block"><div class="math">\mathbf{r}(t) = \mathbf{r}(t_0) + \int_{t_0}^t \mathbf{v}(s)\,ds</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- UNIT 10 -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section" id="unit10">
+  <div class="section-header">
+    <div class="section-num" style="--uc:#f75faf">10</div>
+    <h2 class="section-title">Infinite Sequences &amp; Series</h2>
+  </div>
+
+  <div class="topic-card open" id="s10-sequences">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Sequences &amp; Series Basics</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <p>A sequence converges if \(\lim_{n\to\infty} a_n = L\) (finite). Growth rate hierarchy (slowest to fastest):</p>
+      <div class="formula-block"><div class="math">\ln n \ll n^p \ll a^n\;(a>1) \ll n! \ll n^n</div></div>
+      <div class="subsection"><h4>Geometric Series</h4>
+        <div class="formula-block"><div class="math">\sum_{n=0}^{\infty} ar^n = \frac{a}{1-r} \quad\text{if } |r|<1, \;\text{diverges if } |r|\ge 1</div></div>
+        <div class="formula-block"><div class="math">\sum_{n=0}^{N} ar^n = \frac{a(1-r^{N+1})}{1-r} \quad\text{(finite partial sum)}</div></div>
+      </div>
+      <div class="subsection"><h4>nth Term Test (Divergence Test)</h4>
+        <div class="formula-block"><div class="math">\lim_{n\to\infty} a_n \ne 0 \;\Rightarrow\; \sum a_n \text{ DIVERGES}</div></div>
+        <div class="callout callout-warn"><div class="callout-icon">⚠</div><div class="callout-body">If \(\lim a_n = 0\), the test is inconclusive — the series may still diverge (harmonic series: \(\sum 1/n\) diverges).</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s10-tests">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>All Convergence Tests</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <table class="ref-table">
+        <tr><th>Test</th><th>Apply When</th><th>Condition → Result</th></tr>
+        <tr><td>nth Term</td><td>Always try first</td><td>\(\lim a_n \ne 0\) → <span class="test-badge div">DIVERGES</span></td></tr>
+        <tr><td>Geometric</td><td>\(\sum ar^n\)</td><td>\(|r|<1\) → <span class="test-badge conv">CONVERGES</span> to \(a/(1-r)\)</td></tr>
+        <tr><td>p-Series</td><td>\(\sum 1/n^p\)</td><td>\(p>1\) → <span class="test-badge conv">CONVERGES</span>; \(p\le 1\) → <span class="test-badge div">DIVERGES</span></td></tr>
+        <tr><td>Integral</td><td>f pos, cont, ↘</td><td>\(\int\) conv ↔ \(\sum\) conv</td></tr>
+        <tr><td>Comparison</td><td>Compare to known</td><td>\(a_n\le b_n\): \(\sum b_n\) conv → \(\sum a_n\) conv</td></tr>
+        <tr><td>Limit Comp.</td><td>Rational-like</td><td>\(\lim a_n/b_n = c\) (fin, pos) → same behavior</td></tr>
+        <tr><td>Alternating</td><td>\(\sum(-1)^n a_n\)</td><td>\(a_n \searrow 0\) → <span class="test-badge conv">CONVERGES</span></td></tr>
+        <tr><td>Ratio</td><td>Factorials, \(a^n\)</td><td>\(L<1\) → <span class="test-badge conv">conv</span>; \(L>1\) → <span class="test-badge div">div</span>; \(L=1\) → <span class="test-badge inc">inconclusive</span></td></tr>
+        <tr><td>Root</td><td>\((\text{expr})^n\)</td><td>\(L<1\) → <span class="test-badge conv">conv</span>; \(L>1\) → <span class="test-badge div">div</span>; \(L=1\) → <span class="test-badge inc">inconclusive</span></td></tr>
+      </table>
+      <div class="formula-group" style="margin-top:16px">
+        <div class="formula-group-title">Ratio & Root Test Formulas</div>
+        <div class="formula-row"><span class="lhs math">L = \lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|</span><span class="rhs">Ratio test</span></div>
+        <div class="formula-row"><span class="lhs math">L = \lim_{n\to\infty}\sqrt[n]{|a_n|}</span><span class="rhs">Root test</span></div>
+      </div>
+      <div class="callout callout-note"><div class="callout-icon">◈</div><div class="callout-body"><strong>Alternating Series Error Bound:</strong> \(|\text{error}| \le a_{N+1}\) (the first omitted term). The partial sum alternately over- and under-estimates the true sum.</div></div>
+      <div class="callout callout-note"><div class="callout-icon">◈</div><div class="callout-body"><strong>Absolute vs. Conditional:</strong> \(\sum|a_n|\) converges → absolutely convergent. Converges but \(\sum|a_n|\) diverges → conditionally convergent.</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s10-power">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Power Series &amp; Radius of Convergence</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-block"><div class="math">\sum_{n=0}^{\infty} c_n(x-a)^n = c_0 + c_1(x-a) + c_2(x-a)^2 + \cdots</div></div>
+      <p>Every power series has a <strong>radius of convergence</strong> \(R\). Converges absolutely for \(|x-a|<R\), diverges for \(|x-a|>R\). Check endpoints separately.</p>
+      <div class="formula-block"><div class="math">R = \frac{1}{\lim_{n\to\infty}|c_{n+1}/c_n|} \quad \text{(from Ratio Test)}</div></div>
+      <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">Apply the Ratio Test to find R. Then plug in \(x = a \pm R\) separately and test each endpoint — the interval of convergence may be open, half-open, or closed at each end.</div></div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s10-taylor">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Taylor &amp; Maclaurin Series</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-block"><div class="math">f(x) = \sum_{n=0}^{\infty}\frac{f^{(n)}(a)}{n!}(x-a)^n = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \cdots</div></div>
+      <div class="callout callout-key"><div class="callout-icon">★</div><div class="callout-body">Maclaurin = Taylor centered at \(a=0\). <strong>You must have these memorized.</strong></div></div>
+
+      <div style="margin-top:14px">
+        <div class="maclaurin-card">
+          <div class="mc-name">eˣ</div>
+          <div class="mc-formula math">e^x = \sum_{n=0}^{\infty}\frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!}+\cdots</div>
+          <div class="mc-domain">Converges for all x</div>
+        </div>
+        <div class="maclaurin-card">
+          <div class="mc-name">sin(x)</div>
+          <div class="mc-formula math">\sin x = \sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!}+\frac{x^5}{5!}-\cdots</div>
+          <div class="mc-domain">Converges for all x</div>
+        </div>
+        <div class="maclaurin-card">
+          <div class="mc-name">cos(x)</div>
+          <div class="mc-formula math">\cos x = \sum_{n=0}^{\infty}\frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!}+\frac{x^4}{4!}-\cdots</div>
+          <div class="mc-domain">Converges for all x</div>
+        </div>
+        <div class="maclaurin-card">
+          <div class="mc-name">1/(1−x) — geometric</div>
+          <div class="mc-formula math">\frac{1}{1-x} = \sum_{n=0}^{\infty} x^n = 1+x+x^2+x^3+\cdots</div>
+          <div class="mc-domain">Converges for |x| &lt; 1</div>
+        </div>
+        <div class="maclaurin-card">
+          <div class="mc-name">ln(1+x)</div>
+          <div class="mc-formula math">\ln(1+x) = \sum_{n=1}^{\infty}\frac{(-1)^{n+1}x^n}{n} = x - \frac{x^2}{2}+\frac{x^3}{3}-\cdots</div>
+          <div class="mc-domain">Converges for −1 &lt; x ≤ 1</div>
+        </div>
+        <div class="maclaurin-card">
+          <div class="mc-name">arctan(x)</div>
+          <div class="mc-formula math">\arctan x = \sum_{n=0}^{\infty}\frac{(-1)^n x^{2n+1}}{2n+1} = x - \frac{x^3}{3}+\frac{x^5}{5}-\cdots</div>
+          <div class="mc-domain">Converges for |x| ≤ 1</div>
+        </div>
+      </div>
+
+      <div class="subsection"><h4>Deriving New Series</h4>
+        <ul class="concept-list">
+          <li><strong>Substitution:</strong> replace x with an expression (x²→ e^(x²), −x → 1/(1+x))</li>
+          <li><strong>Differentiation:</strong> term-by-term (radius unchanged)</li>
+          <li><strong>Integration:</strong> term-by-term (radius unchanged; re-check endpoints)</li>
+          <li><strong>Multiplication by xⁿ:</strong> shift the powers</li>
+        </ul>
+      </div>
+
+      <div class="viz-container">
+        <div class="viz-header">
+          <span class="viz-title">Taylor Polynomial Approximation</span>
+          <div class="viz-controls">
+            <button class="viz-btn active" onclick="setTaylorFunc(0,this)">sin(x)</button>
+            <button class="viz-btn" onclick="setTaylorFunc(1,this)">cos(x)</button>
+            <button class="viz-btn" onclick="setTaylorFunc(2,this)">eˣ</button>
+            <button class="viz-btn" onclick="setTaylorFunc(3,this)">ln(1+x)</button>
+            <div class="viz-slider-wrap">terms = <input type="range" id="taylorN" min="1" max="10" step="1" value="2"><span class="val" id="taylorNVal">2</span></div>
+          </div>
+        </div>
+        <canvas id="taylorCanvas" height="300"></canvas>
+        <div class="viz-caption" id="taylorCaption">Blue = true function, orange = Taylor polynomial. More terms = better approximation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-card" id="s10-error">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Lagrange Error Bound</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-block"><div class="math">|R_n(x)| \le \frac{M\cdot|x-a|^{n+1}}{(n+1)!}</div></div>
+      <p>Where \(M\) = maximum of \(|f^{(n+1)}(t)|\) on the interval between \(a\) and \(x\).</p>
+      <ul class="concept-list">
+        <li>For \(\sin x\) and \(\cos x\): all derivatives bounded by 1, so \(M=1\)</li>
+        <li>For \(e^x\): \(M = e^{|x|}\) (evaluate at the far endpoint)</li>
+      </ul>
+      <div class="callout callout-tip"><div class="callout-icon">✓</div><div class="callout-body">Process: find the (n+1)th derivative → bound it by M on your interval → plug into the formula. The bound must be LESS THAN the desired accuracy.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- EXAM TIPS -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-num" style="background:rgba(247,168,79,0.12);color:#f7a84f;border-color:rgba(247,168,79,0.25)">★</div>
+    <h2 class="section-title">Exam Strategy &amp; Common Mistakes</h2>
+  </div>
+  <div class="topic-card open">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>Top Mistakes to Avoid</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <ul class="concept-list">
+        <li>Forgetting <strong>+C</strong> on indefinite integrals</li>
+        <li>Applying L'Hôpital when the limit isn't \(0/0\) or \(\infty/\infty\)</li>
+        <li>Claiming \(f''(c)=0\) means inflection without checking sign change</li>
+        <li>Missing the chain rule factor on \(e^{g(x)}\), \(\ln(g(x))\), trig of g(x)</li>
+        <li>Confusing displacement \(\int v\,dt\) with total distance \(\int|v|\,dt\)</li>
+        <li>Not checking endpoints for global extrema on closed intervals</li>
+        <li>Ratio test giving \(L=1\) → concluding convergence/divergence (it's inconclusive!)</li>
+        <li>Forgetting to test endpoints of interval of convergence separately</li>
+        <li>Using SDT when \(f''(c)=0\) — must use FDT</li>
+        <li>\(d^2y/dx^2\) for parametric: differentiating \(y''\) over \(x''\) instead of the correct formula</li>
+      </ul>
+    </div>
+  </div>
+  <div class="topic-card">
+    <div class="topic-card-header" onclick="toggleCard(this)">
+      <h3>FRQ Justification Phrases</h3>
+      <div class="topic-toggle">+</div>
+    </div>
+    <div class="topic-body">
+      <div class="formula-group">
+        <div class="formula-group-title">Must-Know Justification Templates</div>
+        <div class="formula-row"><span class="lhs">Local max</span><span class="rhs">"f'(c) = 0 and f' changes from positive to negative at x = c, so f has a local maximum there."</span></div>
+        <div class="formula-row"><span class="lhs">Inflection pt.</span><span class="rhs">"f'' changes sign at x = c (from neg to pos), so f has an inflection point there."</span></div>
+        <div class="formula-row"><span class="lhs">MVT</span><span class="rhs">"Since f is continuous on [a,b] and differentiable on (a,b), by MVT ∃c∈(a,b) s.t. f'(c)=(f(b)−f(a))/(b−a)."</span></div>
+        <div class="formula-row"><span class="lhs">IVT</span><span class="rhs">"Since f is continuous on [a,b] and N is between f(a) and f(b), by IVT ∃c∈(a,b) with f(c)=N."</span></div>
+        <div class="formula-row"><span class="lhs">Series conv.</span><span class="rhs">Name the test, verify all conditions, then state the conclusion explicitly.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </div><!-- /content -->
+</main>
+
+<button class="mobile-toggle" id="mobileToggle" onclick="toggleSidebar()">☰</button>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// INIT KATEX
+// ═══════════════════════════════════════════════════════════
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left:"$$", right:"$$", display:true},
+      {left:"\\(", right:"\\)", display:false},
+      {left:"\\[", right:"\\]", display:true},
+    ],
+    throwOnError: false,
+  });
+  // also render .math spans
+  document.querySelectorAll('.math').forEach(el => {
+    try {
+      katex.render(el.textContent, el, { throwOnError: false, displayMode: false });
+    } catch(e) {}
+  });
+
+  initAllCanvases();
+  initSearch();
+  initScrollProgress();
+  initNavHighlight();
+});
+
+// ═══════════════════════════════════════════════════════════
+// CARD TOGGLE
+// ═══════════════════════════════════════════════════════════
+function toggleCard(header) {
+  header.closest('.topic-card').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════
+// SIDEBAR
+// ═══════════════════════════════════════════════════════════
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════════════
+// SCROLL PROGRESS
+// ═══════════════════════════════════════════════════════════
+function initScrollProgress() {
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// NAV HIGHLIGHT
+// ═══════════════════════════════════════════════════════════
+function initNavHighlight() {
+  const links = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const id = e.target.id;
+        const active = document.querySelector(`.nav-link[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3, rootMargin: '-20% 0px -60% 0px' });
+
+  document.querySelectorAll('.topic-card').forEach(c => {
+    if (c.id) observer.observe(c);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════════════════════════
+function initSearch() {
+  const input = document.getElementById('searchInput');
+  const allLinks = [...document.querySelectorAll('.nav-link')];
+  const allUnits = [...document.querySelectorAll('.nav-unit')];
+
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase().trim();
+    if (!q) {
+      allLinks.forEach(l => l.style.display = '');
+      allUnits.forEach(u => u.style.display = '');
+      return;
+    }
+    allUnits.forEach(unit => {
+      const links = unit.querySelectorAll('.nav-link');
+      let any = false;
+      links.forEach(l => {
+        const match = l.textContent.toLowerCase().includes(q);
+        l.style.display = match ? '' : 'none';
+        if (match) any = true;
+      });
+      unit.style.display = any ? '' : 'none';
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+// CANVAS UTILITIES
+// ═══════════════════════════════════════════════════════════
+function setupCanvas(canvas) {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  const w = rect.width || 700;
+  const h = parseInt(canvas.getAttribute('height')) || 300;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  return { ctx, w, h };
+}
+
+function drawAxes(ctx, w, h, xMin, xMax, yMin, yMax, opts = {}) {
+  const px = x => (x - xMin) / (xMax - xMin) * w;
+  const py = y => h - (y - yMin) / (yMax - yMin) * h;
+
+  ctx.strokeStyle = '#1e2640';
+  ctx.lineWidth = 1;
+  // grid
+  if (opts.grid !== false) {
+    ctx.setLineDash([2, 4]);
+    for (let x = Math.ceil(xMin); x <= xMax; x++) {
+      ctx.beginPath(); ctx.moveTo(px(x), 0); ctx.lineTo(px(x), h); ctx.stroke();
+    }
+    for (let y = Math.ceil(yMin); y <= yMax; y++) {
+      ctx.beginPath(); ctx.moveTo(0, py(y)); ctx.lineTo(w, py(y)); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+
+  // axes
+  ctx.strokeStyle = '#2a3355';
+  ctx.lineWidth = 1.5;
+  if (yMin < 0 && yMax > 0) {
+    ctx.beginPath(); ctx.moveTo(0, py(0)); ctx.lineTo(w, py(0)); ctx.stroke();
+  }
+  if (xMin < 0 && xMax > 0) {
+    ctx.beginPath(); ctx.moveTo(px(0), 0); ctx.lineTo(px(0), h); ctx.stroke();
+  }
+
+  return { px, py };
+}
+
+function plotFunc(ctx, f, xMin, xMax, px, py, color, lw = 2) {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lw;
+  ctx.beginPath();
+  let first = true;
+  for (let i = 0; i <= 600; i++) {
+    const x = xMin + (xMax - xMin) * i / 600;
+    const y = f(x);
+    if (!isFinite(y) || Math.abs(y) > 1e6) { first = true; continue; }
+    if (first) { ctx.moveTo(px(x), py(y)); first = false; }
+    else ctx.lineTo(px(x), py(y));
+  }
+  ctx.stroke();
+}
+
+// ═══════════════════════════════════════════════════════════
+// LIMIT CANVAS
+// ═══════════════════════════════════════════════════════════
+let limitCVal = 1.0;
+function drawLimit() {
+  const canvas = document.getElementById('limitCanvas');
+  if (!canvas) return;
+  const { ctx, w, h } = setupCanvas(canvas);
+  const xMin = -3, xMax = 4, yMin = -2, yMax = 5;
+  ctx.clearRect(0, 0, w, h);
+  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+
+  // f(x) = (x^2-1)/(x-1) = x+1 with hole at x=1
+  const f = x => {
+    if (Math.abs(x - limitCVal) < 0.02) return NaN;
+    return x * x - 2 * x + 2; // parabola with a hole
+  };
+  const fActual = x => x * x - 2 * x + 2;
+
+  plotFunc(ctx, fActual, xMin, xMax, px, py, '#4f8ef7', 2.5);
+
+  // approach arrows
+  const c = limitCVal;
+  const L = fActual(c);
+
+  // dashed lines to limit
+  ctx.setLineDash([4, 4]);
+  ctx.strokeStyle = '#2a3355';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(px(c), py(L)); ctx.lineTo(px(c), py(yMin)); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(px(xMin), py(L)); ctx.lineTo(px(c), py(L)); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // approaching dots from both sides
+  [c - 0.4, c - 0.2, c + 0.2, c + 0.4].forEach((xx, i) => {
+    const alpha = i < 2 ? (i + 1) * 0.4 : (4 - i) * 0.4;
+    ctx.fillStyle = `rgba(0,212,170,${alpha})`;
+    ctx.beginPath();
+    ctx.arc(px(xx), py(fActual(xx)), 5, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // hole
+  ctx.strokeStyle = '#4f8ef7';
+  ctx.fillStyle = '#0a0d14';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath(); ctx.arc(px(c), py(L), 6, 0, Math.PI * 2);
+  ctx.fill(); ctx.stroke();
+
+  // L label
+  ctx.fillStyle = '#9ba3c0';
+  ctx.font = '12px JetBrains Mono, monospace';
+  ctx.fillText(`L = ${L.toFixed(2)}`, px(xMin) + 4, py(L) - 5);
+  ctx.fillText(`c = ${c.toFixed(1)}`, px(c) + 6, py(yMin) + 14);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sl = document.getElementById('limitC');
+  const vl = document.getElementById('limitCVal');
+  if (sl) {
+    sl.addEventListener('input', () => {
+      limitCVal = parseFloat(sl.value);
+      vl.textContent = limitCVal.toFixed(1);
+      drawLimit();
+    });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// TANGENT LINE CANVAS
+// ═══════════════════════════════════════════════════════════
+let tanXv = 0.5, tanHv = 1.0;
+function drawTangent() {
+  const canvas = document.getElementById('tanCanvas');
+  if (!canvas) return;
+  const { ctx, w, h } = setupCanvas(canvas);
+  const xMin = -3, xMax = 3, yMin = -3, yMax = 5;
+  ctx.clearRect(0, 0, w, h);
+  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+
+  const f = x => 0.5 * x * x * x - x + 1;
+  const fp = x => 1.5 * x * x - 1;
+  plotFunc(ctx, f, xMin, xMax, px, py, '#4f8ef7', 2.5);
+
+  const a = tanXv, H = tanHv;
+  const b = a + H;
+  const fa = f(a), fb = f(b);
+
+  // secant line
+  const secSlope = (fb - fa) / H;
+  ctx.strokeStyle = '#f7a84f';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6, 3]);
+  ctx.beginPath();
+  ctx.moveTo(px(xMin), py(fa + secSlope * (xMin - a)));
+  ctx.lineTo(px(xMax), py(fa + secSlope * (xMax - a)));
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // tangent line
+  const tanSlope = fp(a);
+  ctx.strokeStyle = '#f75f7b';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(px(xMin), py(fa + tanSlope * (xMin - a)));
+  ctx.lineTo(px(xMax), py(fa + tanSlope * (xMax - a)));
+  ctx.stroke();
+
+  // points
+  [[a, fa, '#f75f7b'], [b, fb, '#f7a84f']].forEach(([x, y, c]) => {
+    ctx.fillStyle = c;
+    ctx.beginPath(); ctx.arc(px(x), py(y), 5, 0, Math.PI * 2); ctx.fill();
+  });
+
+  // labels
+  ctx.font = '11px JetBrains Mono, monospace';
+  ctx.fillStyle = '#f7a84f';
+  ctx.fillText(`secant slope = ${secSlope.toFixed(3)}`, 8, h - 30);
+  ctx.fillStyle = '#f75f7b';
+  ctx.fillText(`tangent slope = ${tanSlope.toFixed(3)}`, 8, h - 14);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sX = document.getElementById('tanX'), vX = document.getElementById('tanXVal');
+  const sH = document.getElementById('tanH'), vH = document.getElementById('tanHVal');
+  if (sX) {
+    sX.addEventListener('input', () => { tanXv = parseFloat(sX.value); vX.textContent = tanXv.toFixed(2); drawTangent(); });
+    sH.addEventListener('input', () => { tanHv = parseFloat(sH.value); vH.textContent = tanHv.toFixed(2); drawTangent(); });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// CONCAVITY CANVAS
+// ═══════════════════════════════════════════════════════════
+let concavFuncIdx = 0;
+const concavFuncs = [
+  { f: x => x*x*x - 3*x,  fp: x => 3*x*x - 3,  fpp: x => 6*x,  name: 'x³−3x' },
+  { f: Math.sin,           fp: Math.cos,          fpp: x => -Math.sin(x), name: 'sin(x)' },
+  { f: x => x*x*x*x - 4*x*x, fp: x => 4*x*x*x - 8*x, fpp: x => 12*x*x - 8, name: 'x⁴−4x²' },
+];
+
+function drawConcav() {
+  const canvas = document.getElementById('concavCanvas');
+  if (!canvas) return;
+  const { ctx, w, h } = setupCanvas(canvas);
+  const { f, fp, fpp } = concavFuncs[concavFuncIdx];
+  const xMin = -3, xMax = 3;
+  const vals = [];
+  for (let i = 0; i <= 400; i++) {
+    const x = xMin + (xMax - xMin) * i / 400;
+    vals.push(f(x));
+  }
+  const yMin = Math.min(...vals) - 0.5, yMax = Math.max(...vals) + 0.5;
+  ctx.clearRect(0, 0, w, h);
+  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+
+  // shade concavity regions
+  const steps = 500;
+  for (let i = 0; i < steps; i++) {
+    const x1 = xMin + (xMax - xMin) * i / steps;
+    const x2 = xMin + (xMax - xMin) * (i + 1) / steps;
+    const xm = (x1 + x2) / 2;
+    const concav = fpp(xm);
+    if (Math.abs(concav) < 0.001) continue;
+    const y1 = f(x1), y2 = f(x2);
+    ctx.fillStyle = concav > 0
+      ? 'rgba(79,142,247,0.07)'
+      : 'rgba(247,95,123,0.07)';
+    ctx.beginPath();
+    ctx.moveTo(px(x1), py(0));
+    ctx.lineTo(px(x1), py(y1));
+    ctx.lineTo(px(x2), py(y2));
+    ctx.lineTo(px(x2), py(0));
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // find inflection points (fpp changes sign)
+  const inflections = [];
+  for (let i = 0; i < 500; i++) {
+    const xa = xMin + (xMax - xMin) * i / 500;
+    const xb = xMin + (xMax - xMin) * (i + 1) / 500;
+    if (fpp(xa) * fpp(xb) < 0) {
+      const xi = (xa + xb) / 2;
+      inflections.push(xi);
+    }
+  }
+
+  plotFunc(ctx, f, xMin, xMax, px, py, '#4f8ef7', 2.5);
+
+  inflections.forEach(xi => {
+    ctx.fillStyle = '#f7d45f';
+    ctx.font = '14px serif';
+    ctx.fillText('◆', px(xi) - 6, py(f(xi)) - 8);
+  });
+
+  // legend
+  ctx.font = '11px DM Sans, sans-serif';
+  ctx.fillStyle = 'rgba(79,142,247,0.8)';
+  ctx.fillText('Concave Up (f″>0)', 10, 20);
+  ctx.fillStyle = 'rgba(247,95,123,0.8)';
+  ctx.fillText('Concave Down (f″<0)', 10, 36);
+}
+
+function setConcavFunc(idx, btn) {
+  concavFuncIdx = idx;
+  document.querySelectorAll('#unit5 .viz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  drawConcav();
+}
+
+// ═══════════════════════════════════════════════════════════
+// RIEMANN SUM CANVAS
+// ═══════════════════════════════════════════════════════════
+let rsType = 'left', rsNv = 6;
+const rsFunc = x => Math.sin(x) + 1.2;
+const rsFuncName = 'sin(x)+1.2';
+
+function setRSType(type, btn) {
+  rsType = type;
+  document.querySelectorAll('#s6-riemann .viz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  drawRS();
+}
+
+function drawRS() {
+  const canvas = document.getElementById('rsCanvas');
+  if (!canvas) return;
+  const { ctx, w, h } = setupCanvas(canvas);
+  const a = 0, b = Math.PI, n = rsNv;
+  const xMin = -0.3, xMax = Math.PI + 0.3, yMin = -0.3, yMax = 2.8;
+  ctx.clearRect(0, 0, w, h);
+  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+
+  const dx = (b - a) / n;
+  let sum = 0;
+
+  for (let i = 0; i < n; i++) {
+    const x0 = a + i * dx, x1 = x0 + dx;
+    let sample;
+    if (rsType === 'left') sample = x0;
+    else if (rsType === 'right') sample = x1;
+    else if (rsType === 'mid') sample = (x0 + x1) / 2;
+    else sample = null; // trap
+
+    if (rsType !== 'trap') {
+      const fy = rsFunc(sample);
+      sum += fy * dx;
+      ctx.fillStyle = 'rgba(79,142,247,0.22)';
+      ctx.strokeStyle = '#4f8ef7';
+      ctx.lineWidth = 1;
+      const rx = px(x0), ry = py(fy), rw = px(x1) - px(x0), rh = py(0) - py(fy);
+      ctx.fillRect(rx, ry, rw, rh);
+      ctx.strokeRect(rx, ry, rw, rh);
+    } else {
+      const y0 = rsFunc(x0), y1 = rsFunc(x1);
+      sum += (y0 + y1) * dx / 2;
+      ctx.fillStyle = 'rgba(123,95,245,0.18)';
+      ctx.strokeStyle = '#7b5ff5';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(px(x0), py(0)); ctx.lineTo(px(x0), py(y0));
+      ctx.lineTo(px(x1), py(y1)); ctx.lineTo(px(x1), py(0));
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+    }
+  }
+
+  plotFunc(ctx, rsFunc, a, b, px, py, '#4f8ef7', 2.5);
+
+  const exact = -Math.cos(Math.PI) + Math.cos(0) + 1.2 * Math.PI;
+  document.getElementById('rsCaption').textContent =
+    `∫₀^π ${rsFuncName} dx ≈ ${sum.toFixed(4)} (exact: ${exact.toFixed(4)}) | n=${n} ${rsType} rectangles`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sN = document.getElementById('rsN'), vN = document.getElementById('rsNVal');
+  if (sN) {
+    sN.addEventListener('input', () => { rsNv = parseInt(sN.value); vN.textContent = rsNv; drawRS(); });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// SLOPE FIELD CANVAS
+// ═══════════════════════════════════════════════════════════
+let slopeDEIdx = 0;
+const slopeDEs = [
+  { fn: (x,y) => x, name: 'dy/dx = x' },
+  { fn: (x,y) => y, name: 'dy/dx = y' },
+  { fn: (x,y) => x - y, name: 'dy/dx = x−y' },
+  { fn: (x,y) => x * y, name: 'dy/dx = xy' },
+];
+let solutionCurves = [];
+
+function setSlopeDE(idx, btn) {
+  slopeDEIdx = idx;
+  solutionCurves = [];
+  document.querySelectorAll('#s7-slope .viz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  drawSlope();
+}
+
+function drawSlope() {
+  const canvas = document.getElementById('slopeCanvas');
+  if (!canvas) return;
+  const { ctx, w, h } = setupCanvas(canvas);
+  const xMin = -4, xMax = 4, yMin = -4, yMax = 4;
+  ctx.clearRect(0, 0, w, h);
+  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+
+  const de = slopeDEs[slopeDEIdx].fn;
+  const cols = 22, rows = 22;
+
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      const x = xMin + (xMax - xMin) * i / (cols - 1);
+      const y = yMin + (yMax - yMin) * j / (rows - 1);
+      const slope = de(x, y);
+      if (!isFinite(slope)) continue;
+      const angle = Math.atan(slope);
+      const len = 14;
+      const dx = Math.cos(angle) * len / 2;
+      const dy = Math.sin(angle) * len / 2;
+      const cx = px(x), cy = py(y);
+      const mag = Math.min(Math.abs(slope), 3) / 3;
+      ctx.strokeStyle = `rgba(79,142,247,${0.3 + mag * 0.5})`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(cx - dx, cy + dy); ctx.lineTo(cx + dx, cy - dy);
+      ctx.stroke();
+    }
+  }
+
+  // draw solution curves
+  solutionCurves.forEach(({ x0, y0 }) => {
+    ctx.strokeStyle = '#00d4aa';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    let x = x0, y = y0;
+    const dt = 0.05;
+    ctx.moveTo(px(x), py(y));
+    for (let s = 0; s < 200; s++) {
+      const k1 = de(x, y);
+      x += dt; y += k1 * dt;
+      if (x > xMax || !isFinite(y) || y > yMax || y < yMin) break;
+      ctx.lineTo(px(x), py(y));
+    }
+    x = x0; y = y0;
+    ctx.moveTo(px(x), py(y));
+    for (let s = 0; s < 200; s++) {
+      const k1 = de(x, y);
+      x -= dt; y -= k1 * dt;
+      if (x < xMin || !isFinite(y) || y > yMax || y < yMin) break;
+      ctx.lineTo(px(x), py(y));
+    }
+    ctx.stroke();
+    ctx.fillStyle = '#00d4aa';
+    ctx.beginPath(); ctx.arc(px(x0), py(y0), 4, 0, Math.PI * 2); ctx.fill();
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('slopeCanvas');
+  if (canvas) {
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const cx = (e.clientX - rect.left) / rect.width;
+      const cy = (e.clientY - rect.top) / rect.height;
+      const x = -4 + cx * 8, y = 4 - cy * 8;
+      solutionCurves.push({ x0: x, y0: y });
+      if (solutionCurves.length > 5) solutionCurves.shift();
+      drawSlope();
+    });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// LOGISTIC CANVAS
+// ═══════════════════════════════════════════════════════════
+let logKv = 0.5, logY0v = 10;
+function drawLogistic() {
+  const canvas = document.getElementById('logisticCanvas');
+  if (!canvas) return;
+  const { ctx, w, h } = setupCanvas(canvas);
+  const L = 100, tMax = 20;
+  const xMin = 0, xMax = tMax, yMin = 0, yMax = 115;
+  ctx.clearRect(0, 0, w, h);
+  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax, { grid: false });
+
+  const k = logKv, y0 = logY0v;
+  const A = (L - y0) / y0;
+  const logF = t => L / (1 + A * Math.exp(-k * t));
+
+  // carrying capacity dashed
+  ctx.strokeStyle = '#2a3355';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  ctx.moveTo(px(xMin), py(L)); ctx.lineTo(px(xMax), py(L));
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#5c6480';
+  ctx.font = '11px JetBrains Mono, monospace';
+  ctx.fillText('L = 100', px(tMax) - 60, py(L) - 6);
+
+  // L/2 line
+  ctx.strokeStyle = 'rgba(247,95,123,0.3)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([3, 3]);
+  ctx.beginPath();
+  ctx.moveTo(px(xMin), py(L/2)); ctx.lineTo(px(xMax), py(L/2));
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  plotFunc(ctx, logF, xMin, xMax, px, py, '#00d4aa', 2.5);
+
+  // inflection point
+  const tInfl = Math.log(A) / k;
+  if (tInfl > 0 && tInfl < tMax) {
+    ctx.fillStyle = '#f75f7b';
+    ctx.beginPath();
+    ctx.arc(px(tInfl), py(L/2), 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#f75f7b';
+    ctx.font = '10px DM Sans, sans-serif';
+    ctx.fillText(`inflection t≈${tInfl.toFixed(1)}`, px(tInfl) + 8, py(L/2) - 4);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sK = document.getElementById('logK'), vK = document.getElementById('logKVal');
+  const sY = document.getElementById('logY0'), vY = document.getElementById('logY0Val');
+  if (sK) {
+    sK.addEventListener('input', () => { logKv = parseFloat(sK.value); vK.textContent = logKv.toFixed(2); drawLogistic(); });
+    sY.addEventListener('input', () => { logY0v = parseInt(sY.value); vY.textContent = logY0v; drawLogistic(); });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// PARAMETRIC CANVAS
+// ═══════════════════════════════════════════════════════════
+let paramIdx = 0;
+const paramCurves = [
+  { x: t => 2*Math.cos(t), y: t => Math.sin(t), tMin: 0, tMax: Math.PI*2, lbl: 'Ellipse: x=2cos(t), y=sin(t)' },
+  { x: t => Math.sin(2*t), y: t => Math.sin(3*t), tMin: 0, tMax: Math.PI*2, lbl: 'Lissajous: x=sin(2t), y=sin(3t)' },
+  { x: t => t-Math.sin(t), y: t => 1-Math.cos(t), tMin: 0, tMax: Math.PI*4, lbl: 'Cycloid: x=t−sin(t), y=1−cos(t)' },
+  { x: t => Math.cos(t)*Math.cos(3*t), y: t => Math.sin(t)*Math.cos(3*t), tMin: 0, tMax: Math.PI*2, lbl: '3-petal rose' },
+];
+let paramT = 0, paramAnim = null;
+
+function setParamCurve(idx, btn) {
+  paramIdx = idx;
+  paramT = 0;
+  document.querySelectorAll('#s9-parametric .viz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('paramCaption').textContent = paramCurves[idx].lbl;
+  drawParam();
+}
+
+function drawParam() {
+  const canvas = document.getElementById('paramCanvas');
+  if (!canvas) return;
+  const { ctx, w, h } = setupCanvas(canvas);
+  const curve = paramCurves[paramIdx];
+  const pts = [];
+  const N = 500;
+  for (let i = 0; i <= N; i++) {
+    const t = curve.tMin + (curve.tMax - curve.tMin) * i / N;
+    pts.push({ x: curve.x(t), y: curve.y(t), t });
+  }
+  const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
+  const xMin = Math.min(...xs) - 0.4, xMax = Math.max(...xs) + 0.4;
+  const yMin = Math.min(...ys) - 0.4, yMax = Math.max(...ys) + 0.4;
+  const xr = xMax - xMin, yr = yMax - yMin;
+  const sq = Math.max(xr, yr);
+  const xMid = (xMin + xMax) / 2, yMid = (yMin + yMax) / 2;
+  const x0 = xMid - sq/2 - 0.2, x1 = xMid + sq/2 + 0.2;
+  const y0v = yMid - sq/2 - 0.2, y1v = yMid + sq/2 + 0.2;
+
+  ctx.clearRect(0, 0, w, h);
+  const { px, py } = drawAxes(ctx, w, h, x0, x1, y0v, y1v);
+
+  // draw curve with gradient color
+  ctx.lineWidth = 2.5;
+  for (let i = 1; i < pts.length; i++) {
+    const t = i / pts.length;
+    ctx.strokeStyle = `hsl(${200 + t*80},80%,60%)`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(px(pts[i-1].x), py(pts[i-1].y));
+    ctx.lineTo(px(pts[i].x), py(pts[i].y));
+    ctx.stroke();
+  }
+
+  // moving point
+  const tCur = curve.tMin + (curve.tMax - curve.tMin) * paramT;
+  const xp = curve.x(tCur), yp = curve.y(tCur);
+  const dt = 0.01;
+  const dxdt = (curve.x(tCur+dt) - curve.x(tCur-dt))/(2*dt);
+  const dydt = (curve.y(tCur+dt) - curve.y(tCur-dt))/(2*dt);
+
+  if (Math.abs(dxdt) > 0.001) {
+    const slope = dydt / dxdt;
+    const len = 0.8;
+    ctx.strokeStyle = '#f75f7b';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(px(xp - len), py(yp - len * slope));
+    ctx.lineTo(px(xp + len), py(yp + len * slope));
+    ctx.stroke();
+  }
+
+  ctx.fillStyle = '#f75f7b';
+  ctx.beginPath(); ctx.arc(px(xp), py(yp), 6, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#9ba3c0';
+  ctx.font = '11px JetBrains Mono, monospace';
+  ctx.fillText(`t = ${tCur.toFixed(2)}`, 8, h - 10);
+}
+
+function animateParam() {
+  paramT = (paramT + 0.003) % 1;
+  drawParam();
+  paramAnim = requestAnimationFrame(animateParam);
+}
+
+// ═══════════════════════════════════════════════════════════
+// POLAR CANVAS
+// ═══════════════════════════════════════════════════════════
+let polarIdx = 0;
+const polarCurves = [
+  { r: t => 2*(1+Math.cos(t)), tMax: Math.PI*2, lbl: 'Cardioid: r = 2(1+cos θ)' },
+  { r: t => 2*Math.cos(3*t), tMax: Math.PI, lbl: 'Rose (3-petal): r = 2cos(3θ)' },
+  { r: t => 2*Math.cos(2*t), tMax: Math.PI*2, lbl: 'Rose (4-petal): r = 2cos(2θ)' },
+  { r: t => 1 + 2*Math.cos(t), tMax: Math.PI*2, lbl: 'Limaçon: r = 1 + 2cos θ' },
+  { r: t => t*0.4, tMax: Math.PI*4, lbl: 'Spiral: r = 0.4θ' },
+];
+let polarAnim2 = null, polarTheta = 0;
+
+function setPolarCurve(idx, btn) {
+  polarIdx = idx;
+  polarTheta = 0;
+  document.querySelectorAll('#s9-polar .viz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('polarCaption').textContent = polarCurves[idx].lbl;
+}
+
+function drawPolar() {
+  const canvas = document.getElementById('polarCanvas');
+  if (!canvas) return;
+  const { ctx, w, h } = setupCanvas(canvas);
+  const curve = polarCurves[polarIdx];
+  const cx = w/2, cy = h/2;
+  const pts = [];
+  for (let i = 0; i <= 600; i++) {
+    const t = curve.tMax * i / 600;
+    const r = curve.r(t);
+    pts.push({ x: r*Math.cos(t), y: r*Math.sin(t) });
+  }
+  const maxR = Math.max(...pts.map(p => Math.sqrt(p.x*p.x+p.y*p.y)));
+  const scale = Math.min(w, h) * 0.42 / (maxR || 1);
+
+  ctx.clearRect(0, 0, w, h);
+
+  // grid circles
+  [1,2,3,4].forEach(ring => {
+    ctx.strokeStyle = '#1e2640';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(cx, cy, ring * scale * maxR / 4, 0, Math.PI*2);
+    ctx.stroke();
+  });
+  // radial lines
+  for (let a = 0; a < Math.PI*2; a += Math.PI/6) {
+    ctx.beginPath();
+    ctx.strokeStyle = '#1e2640';
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(a)*maxR*scale*1.1, cy - Math.sin(a)*maxR*scale*1.1);
+    ctx.stroke();
+  }
+  ctx.strokeStyle = '#2a3355'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(0,cy); ctx.lineTo(w,cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx,0); ctx.lineTo(cx,h); ctx.stroke();
+
+  // shaded swept area
+  const sweepFrac = polarTheta / curve.tMax;
+  const sweepPts = Math.floor(sweepFrac * 600);
+  if (sweepPts > 2) {
+    ctx.fillStyle = 'rgba(79,142,247,0.12)';
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    for (let i = 0; i <= sweepPts && i < pts.length; i++) {
+      ctx.lineTo(cx + pts[i].x * scale, cy - pts[i].y * scale);
+    }
+    ctx.closePath(); ctx.fill();
+  }
+
+  // full curve (faded)
+  ctx.strokeStyle = 'rgba(79,142,247,0.25)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  pts.forEach((p, i) => {
+    const fx = cx + p.x*scale, fy = cy - p.y*scale;
+    i === 0 ? ctx.moveTo(fx, fy) : ctx.lineTo(fx, fy);
+  });
+  ctx.stroke();
+
+  // drawn so far
+  ctx.strokeStyle = '#4f8ef7';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  for (let i = 0; i <= sweepPts && i < pts.length; i++) {
+    const fx = cx + pts[i].x*scale, fy = cy - pts[i].y*scale;
+    i === 0 ? ctx.moveTo(fx, fy) : ctx.lineTo(fx, fy);
+  }
+  ctx.stroke();
+
+  // current point
+  const curT = polarTheta;
+  const curR = curve.r(curT);
+  const cpx = cx + curR*Math.cos(curT)*scale, cpy = cy - curR*Math.sin(curT)*scale;
+  ctx.strokeStyle = '#f75f7b'; ctx.lineWidth = 1;
+  ctx.setLineDash([3,3]);
+  ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cpx,cpy); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#f75f7b';
+  ctx.beginPath(); ctx.arc(cpx, cpy, 5, 0, Math.PI*2); ctx.fill();
+
+  ctx.fillStyle = '#9ba3c0';
+  ctx.font = '11px JetBrains Mono, monospace';
+  ctx.fillText(`θ = ${curT.toFixed(2)}  r = ${curR.toFixed(2)}`, 8, h-10);
+}
+
+function animatePolar() {
+  polarTheta += 0.02;
+  if (polarTheta > polarCurves[polarIdx].tMax) polarTheta = 0;
+  drawPolar();
+  polarAnim2 = requestAnimationFrame(animatePolar);
+}
+
+// ═══════════════════════════════════════════════════════════
+// TAYLOR CANVAS
+// ═══════════════════════════════════════════════════════════
+let taylorFuncIdx = 0, taylorNv = 2;
+const taylorFuncs = [
+  {
+    f: Math.sin,
+    coeffs: n => {
+      const terms = [];
+      for (let k = 0; k <= n; k++) {
+        const p = 2*k+1;
+        terms.push({ coeff: (k%2===0?1:-1) / factorial(p), pow: p });
+      }
+      return terms;
+    },
+    name: 'sin(x)'
+  },
+  {
+    f: Math.cos,
+    coeffs: n => {
+      const terms = [];
+      for (let k = 0; k <= n; k++) {
+        const p = 2*k;
+        terms.push({ coeff: (k%2===0?1:-1) / factorial(p), pow: p });
+      }
+      return terms;
+    },
+    name: 'cos(x)'
+  },
+  {
+    f: Math.exp,
+    coeffs: n => {
+      const terms = [];
+      for (let k = 0; k <= n; k++) {
+        terms.push({ coeff: 1/factorial(k), pow: k });
+      }
+      return terms;
+    },
+    name: 'eˣ'
+  },
+  {
+    f: x => Math.log(1+x),
+    coeffs: n => {
+      const terms = [];
+      for (let k = 1; k <= n+1; k++) {
+        terms.push({ coeff: (k%2===0?-1:1)/k, pow: k });
+      }
+      return terms;
+    },
+    name: 'ln(1+x)'
+  },
+];
+
+function factorial(n) { let r=1; for(let i=2;i<=n;i++) r*=i; return r; }
+
+function evalTaylor(terms, x) {
+  return terms.reduce((s, { coeff, pow }) => s + coeff * Math.pow(x, pow), 0);
+}
+
+function setTaylorFunc(idx, btn) {
+  taylorFuncIdx = idx;
+  document.querySelectorAll('#s10-taylor .viz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  drawTaylor();
+}
+
+function drawTaylor() {
+  const canvas = document.getElementById('taylorCanvas');
+  if (!canvas) return;
+  const { ctx, w, h } = setupCanvas(canvas);
+  const fn = taylorFuncs[taylorFuncIdx];
+  const xMin = -Math.PI*1.5, xMax = Math.PI*1.5, yMin = -3, yMax = 3;
+  ctx.clearRect(0, 0, w, h);
+  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+
+  // true function
+  plotFunc(ctx, fn.f, xMin, xMax, px, py, '#4f8ef7', 2.5);
+
+  // taylor polynomial
+  const terms = fn.coeffs(taylorNv - 1);
+  const tpoly = x => evalTaylor(terms, x);
+  plotFunc(ctx, tpoly, xMin, xMax, px, py, '#f7a84f', 2.5);
+
+  ctx.font = '11px DM Sans, sans-serif';
+  ctx.fillStyle = '#4f8ef7';
+  ctx.fillText(`f(x) = ${fn.name}`, 10, 20);
+  ctx.fillStyle = '#f7a84f';
+  ctx.fillText(`P_{${taylorNv*2-1 > 20 ? taylorNv : ''}}(x): ${taylorNv} term${taylorNv>1?'s':''}`, 10, 36);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sT = document.getElementById('taylorN'), vT = document.getElementById('taylorNVal');
+  if (sT) {
+    sT.addEventListener('input', () => { taylorNv = parseInt(sT.value); vT.textContent = taylorNv; drawTaylor(); });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+// MASTER INIT
+// ═══════════════════════════════════════════════════════════
+function initAllCanvases() {
+  drawLimit(); drawTangent(); drawConcav(); drawRS();
+  drawSlope(); drawLogistic(); drawParam(); drawTaylor();
+
+  // start animations
+  animateParam();
+  animatePolar();
+}
+
+// handle resize
+window.addEventListener('resize', () => {
+  drawLimit(); drawTangent(); drawConcav(); drawRS();
+  drawSlope(); drawLogistic(); drawTaylor();
+});
+</script>
+</body>
+</html>
