@@ -1950,6 +1950,62 @@ canvas {
 
 <script>
 // ═══════════════════════════════════════════════════════════
+// SHARED UTILITIES
+// ═══════════════════════════════════════════════════════════
+
+/**
+ * Bind a range slider to a display span and a redraw callback.
+ * @param {string} sliderId - ID of the <input type="range">
+ * @param {string} valId - ID of the <span> that shows the current value
+ * @param {object} opts
+ * @param {function} opts.parse - parser (parseFloat or parseInt)
+ * @param {function} opts.format - formatter for display (e.g. v => v.toFixed(2))
+ * @param {function} opts.onChange - called with the parsed value
+ */
+function bindSlider(sliderId, valId, opts) {
+  const slider = document.getElementById(sliderId);
+  const display = document.getElementById(valId);
+  if (!slider) return null;
+  slider.addEventListener('input', () => {
+    const v = opts.parse(slider.value);
+    if (display) display.textContent = opts.format(v);
+    opts.onChange(v);
+  });
+  return slider;
+}
+
+/**
+ * Initialize a canvas for drawing: handle DPR scaling, clear, and draw axes.
+ * @param {string} canvasId - ID of the <canvas> element
+ * @param {number} xMin
+ * @param {number} xMax
+ * @param {number} yMin
+ * @param {number} yMax
+ * @param {object} [axesOpts] - options forwarded to drawAxes
+ * @returns {{ ctx, w, h, px, py }|null} - null if canvas not found
+ */
+function initCanvasDraw(canvasId, xMin, xMax, yMin, yMax, axesOpts) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return null;
+  const { ctx, w, h } = setupCanvas(canvas);
+  ctx.clearRect(0, 0, w, h);
+  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax, axesOpts);
+  return { ctx, w, h, px, py };
+}
+
+/**
+ * Generic "set active button" handler for visualization selectors.
+ * @param {string} containerSelector - CSS selector for the container with .viz-btn elements
+ * @param {HTMLElement} btn - the clicked button
+ * @param {function} callback - called after updating the active state
+ */
+function setActiveButton(containerSelector, btn, callback) {
+  document.querySelectorAll(containerSelector + ' .viz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  callback();
+}
+
+// ═══════════════════════════════════════════════════════════
 // INIT KATEX
 // ═══════════════════════════════════════════════════════════
 document.addEventListener("DOMContentLoaded", function() {
@@ -1969,6 +2025,7 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   initAllCanvases();
+  initSliders();
   initSearch();
   initScrollProgress();
   initNavHighlight();
@@ -2116,12 +2173,10 @@ function plotFunc(ctx, f, xMin, xMax, px, py, color, lw = 2) {
 // ═══════════════════════════════════════════════════════════
 let limitCVal = 1.0;
 function drawLimit() {
-  const canvas = document.getElementById('limitCanvas');
-  if (!canvas) return;
-  const { ctx, w, h } = setupCanvas(canvas);
   const xMin = -3, xMax = 4, yMin = -2, yMax = 5;
-  ctx.clearRect(0, 0, w, h);
-  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+  const cv = initCanvasDraw('limitCanvas', xMin, xMax, yMin, yMax);
+  if (!cv) return;
+  const { ctx, w, h, px, py } = cv;
 
   // f(x) = (x^2-1)/(x-1) = x+1 with hole at x=1
   const f = x => {
@@ -2167,29 +2222,17 @@ function drawLimit() {
   ctx.fillText(`c = ${c.toFixed(1)}`, px(c) + 6, py(yMin) + 14);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const sl = document.getElementById('limitC');
-  const vl = document.getElementById('limitCVal');
-  if (sl) {
-    sl.addEventListener('input', () => {
-      limitCVal = parseFloat(sl.value);
-      vl.textContent = limitCVal.toFixed(1);
-      drawLimit();
-    });
-  }
-});
+
 
 // ═══════════════════════════════════════════════════════════
 // TANGENT LINE CANVAS
 // ═══════════════════════════════════════════════════════════
 let tanXv = 0.5, tanHv = 1.0;
 function drawTangent() {
-  const canvas = document.getElementById('tanCanvas');
-  if (!canvas) return;
-  const { ctx, w, h } = setupCanvas(canvas);
   const xMin = -3, xMax = 3, yMin = -3, yMax = 5;
-  ctx.clearRect(0, 0, w, h);
-  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+  const cv = initCanvasDraw('tanCanvas', xMin, xMax, yMin, yMax);
+  if (!cv) return;
+  const { ctx, w, h, px, py } = cv;
 
   const f = x => 0.5 * x * x * x - x + 1;
   const fp = x => 1.5 * x * x - 1;
@@ -2233,14 +2276,7 @@ function drawTangent() {
   ctx.fillText(`tangent slope = ${tanSlope.toFixed(3)}`, 8, h - 14);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const sX = document.getElementById('tanX'), vX = document.getElementById('tanXVal');
-  const sH = document.getElementById('tanH'), vH = document.getElementById('tanHVal');
-  if (sX) {
-    sX.addEventListener('input', () => { tanXv = parseFloat(sX.value); vX.textContent = tanXv.toFixed(2); drawTangent(); });
-    sH.addEventListener('input', () => { tanHv = parseFloat(sH.value); vH.textContent = tanHv.toFixed(2); drawTangent(); });
-  }
-});
+
 
 // ═══════════════════════════════════════════════════════════
 // CONCAVITY CANVAS
@@ -2255,7 +2291,6 @@ const concavFuncs = [
 function drawConcav() {
   const canvas = document.getElementById('concavCanvas');
   if (!canvas) return;
-  const { ctx, w, h } = setupCanvas(canvas);
   const { f, fp, fpp } = concavFuncs[concavFuncIdx];
   const xMin = -3, xMax = 3;
   const vals = [];
@@ -2264,6 +2299,7 @@ function drawConcav() {
     vals.push(f(x));
   }
   const yMin = Math.min(...vals) - 0.5, yMax = Math.max(...vals) + 0.5;
+  const { ctx, w, h } = setupCanvas(canvas);
   ctx.clearRect(0, 0, w, h);
   const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
 
@@ -2317,9 +2353,7 @@ function drawConcav() {
 
 function setConcavFunc(idx, btn) {
   concavFuncIdx = idx;
-  document.querySelectorAll('#unit5 .viz-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  drawConcav();
+  setActiveButton('#unit5', btn, drawConcav);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -2331,19 +2365,15 @@ const rsFuncName = 'sin(x)+1.2';
 
 function setRSType(type, btn) {
   rsType = type;
-  document.querySelectorAll('#s6-riemann .viz-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  drawRS();
+  setActiveButton('#s6-riemann', btn, drawRS);
 }
 
 function drawRS() {
-  const canvas = document.getElementById('rsCanvas');
-  if (!canvas) return;
-  const { ctx, w, h } = setupCanvas(canvas);
   const a = 0, b = Math.PI, n = rsNv;
   const xMin = -0.3, xMax = Math.PI + 0.3, yMin = -0.3, yMax = 2.8;
-  ctx.clearRect(0, 0, w, h);
-  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+  const cv = initCanvasDraw('rsCanvas', xMin, xMax, yMin, yMax);
+  if (!cv) return;
+  const { ctx, w, h, px, py } = cv;
 
   const dx = (b - a) / n;
   let sum = 0;
@@ -2385,12 +2415,7 @@ function drawRS() {
     `∫₀^π ${rsFuncName} dx ≈ ${sum.toFixed(4)} (exact: ${exact.toFixed(4)}) | n=${n} ${rsType} rectangles`;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const sN = document.getElementById('rsN'), vN = document.getElementById('rsNVal');
-  if (sN) {
-    sN.addEventListener('input', () => { rsNv = parseInt(sN.value); vN.textContent = rsNv; drawRS(); });
-  }
-});
+
 
 // ═══════════════════════════════════════════════════════════
 // SLOPE FIELD CANVAS
@@ -2407,18 +2432,14 @@ let solutionCurves = [];
 function setSlopeDE(idx, btn) {
   slopeDEIdx = idx;
   solutionCurves = [];
-  document.querySelectorAll('#s7-slope .viz-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  drawSlope();
+  setActiveButton('#s7-slope', btn, drawSlope);
 }
 
 function drawSlope() {
-  const canvas = document.getElementById('slopeCanvas');
-  if (!canvas) return;
-  const { ctx, w, h } = setupCanvas(canvas);
   const xMin = -4, xMax = 4, yMin = -4, yMax = 4;
-  ctx.clearRect(0, 0, w, h);
-  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+  const cv = initCanvasDraw('slopeCanvas', xMin, xMax, yMin, yMax);
+  if (!cv) return;
+  const { ctx, w, h, px, py } = cv;
 
   const de = slopeDEs[slopeDEIdx].fn;
   const cols = 22, rows = 22;
@@ -2471,33 +2492,18 @@ function drawSlope() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const canvas = document.getElementById('slopeCanvas');
-  if (canvas) {
-    canvas.addEventListener('click', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const cx = (e.clientX - rect.left) / rect.width;
-      const cy = (e.clientY - rect.top) / rect.height;
-      const x = -4 + cx * 8, y = 4 - cy * 8;
-      solutionCurves.push({ x0: x, y0: y });
-      if (solutionCurves.length > 5) solutionCurves.shift();
-      drawSlope();
-    });
-  }
-});
+
 
 // ═══════════════════════════════════════════════════════════
 // LOGISTIC CANVAS
 // ═══════════════════════════════════════════════════════════
 let logKv = 0.5, logY0v = 10;
 function drawLogistic() {
-  const canvas = document.getElementById('logisticCanvas');
-  if (!canvas) return;
-  const { ctx, w, h } = setupCanvas(canvas);
   const L = 100, tMax = 20;
   const xMin = 0, xMax = tMax, yMin = 0, yMax = 115;
-  ctx.clearRect(0, 0, w, h);
-  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax, { grid: false });
+  const cv = initCanvasDraw('logisticCanvas', xMin, xMax, yMin, yMax, { grid: false });
+  if (!cv) return;
+  const { ctx, w, h, px, py } = cv;
 
   const k = logKv, y0 = logY0v;
   const A = (L - y0) / y0;
@@ -2539,14 +2545,7 @@ function drawLogistic() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const sK = document.getElementById('logK'), vK = document.getElementById('logKVal');
-  const sY = document.getElementById('logY0'), vY = document.getElementById('logY0Val');
-  if (sK) {
-    sK.addEventListener('input', () => { logKv = parseFloat(sK.value); vK.textContent = logKv.toFixed(2); drawLogistic(); });
-    sY.addEventListener('input', () => { logY0v = parseInt(sY.value); vY.textContent = logY0v; drawLogistic(); });
-  }
-});
+
 
 // ═══════════════════════════════════════════════════════════
 // PARAMETRIC CANVAS
@@ -2563,10 +2562,10 @@ let paramT = 0, paramAnim = null;
 function setParamCurve(idx, btn) {
   paramIdx = idx;
   paramT = 0;
-  document.querySelectorAll('#s9-parametric .viz-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('paramCaption').textContent = paramCurves[idx].lbl;
-  drawParam();
+  setActiveButton('#s9-parametric', btn, () => {
+    document.getElementById('paramCaption').textContent = paramCurves[idx].lbl;
+    drawParam();
+  });
 }
 
 function drawParam() {
@@ -2651,9 +2650,9 @@ let polarAnim2 = null, polarTheta = 0;
 function setPolarCurve(idx, btn) {
   polarIdx = idx;
   polarTheta = 0;
-  document.querySelectorAll('#s9-polar .viz-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('polarCaption').textContent = polarCurves[idx].lbl;
+  setActiveButton('#s9-polar', btn, () => {
+    document.getElementById('polarCaption').textContent = polarCurves[idx].lbl;
+  });
 }
 
 function drawPolar() {
@@ -2810,19 +2809,15 @@ function evalTaylor(terms, x) {
 
 function setTaylorFunc(idx, btn) {
   taylorFuncIdx = idx;
-  document.querySelectorAll('#s10-taylor .viz-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  drawTaylor();
+  setActiveButton('#s10-taylor', btn, drawTaylor);
 }
 
 function drawTaylor() {
-  const canvas = document.getElementById('taylorCanvas');
-  if (!canvas) return;
-  const { ctx, w, h } = setupCanvas(canvas);
   const fn = taylorFuncs[taylorFuncIdx];
   const xMin = -Math.PI*1.5, xMax = Math.PI*1.5, yMin = -3, yMax = 3;
-  ctx.clearRect(0, 0, w, h);
-  const { px, py } = drawAxes(ctx, w, h, xMin, xMax, yMin, yMax);
+  const cv = initCanvasDraw('taylorCanvas', xMin, xMax, yMin, yMax);
+  if (!cv) return;
+  const { ctx, w, h, px, py } = cv;
 
   // true function
   plotFunc(ctx, fn.f, xMin, xMax, px, py, '#4f8ef7', 2.5);
@@ -2839,12 +2834,66 @@ function drawTaylor() {
   ctx.fillText(`P_{${taylorNv*2-1 > 20 ? taylorNv : ''}}(x): ${taylorNv} term${taylorNv>1?'s':''}`, 10, 36);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const sT = document.getElementById('taylorN'), vT = document.getElementById('taylorNVal');
-  if (sT) {
-    sT.addEventListener('input', () => { taylorNv = parseInt(sT.value); vT.textContent = taylorNv; drawTaylor(); });
+
+
+// ═══════════════════════════════════════════════════════════
+// SLIDER & INTERACTION BINDINGS (consolidated)
+// ═══════════════════════════════════════════════════════════
+function initSliders() {
+  bindSlider('limitC', 'limitCVal', {
+    parse: parseFloat,
+    format: v => v.toFixed(1),
+    onChange: v => { limitCVal = v; drawLimit(); }
+  });
+
+  bindSlider('tanX', 'tanXVal', {
+    parse: parseFloat,
+    format: v => v.toFixed(2),
+    onChange: v => { tanXv = v; drawTangent(); }
+  });
+  bindSlider('tanH', 'tanHVal', {
+    parse: parseFloat,
+    format: v => v.toFixed(2),
+    onChange: v => { tanHv = v; drawTangent(); }
+  });
+
+  bindSlider('rsN', 'rsNVal', {
+    parse: parseInt,
+    format: v => String(v),
+    onChange: v => { rsNv = v; drawRS(); }
+  });
+
+  bindSlider('logK', 'logKVal', {
+    parse: parseFloat,
+    format: v => v.toFixed(2),
+    onChange: v => { logKv = v; drawLogistic(); }
+  });
+  bindSlider('logY0', 'logY0Val', {
+    parse: parseInt,
+    format: v => String(v),
+    onChange: v => { logY0v = v; drawLogistic(); }
+  });
+
+  bindSlider('taylorN', 'taylorNVal', {
+    parse: parseInt,
+    format: v => String(v),
+    onChange: v => { taylorNv = v; drawTaylor(); }
+  });
+
+  // Slope field canvas click-to-add-solution-curve
+  const slopeCanvas = document.getElementById('slopeCanvas');
+  if (slopeCanvas) {
+    slopeCanvas.addEventListener('click', (e) => {
+      const rect = slopeCanvas.getBoundingClientRect();
+      const cx = (e.clientX - rect.left) / rect.width;
+      const cy = (e.clientY - rect.top) / rect.height;
+      const x = -4 + cx * 8, y = 4 - cy * 8;
+      solutionCurves.push({ x0: x, y0: y });
+      if (solutionCurves.length > 5) solutionCurves.shift();
+      drawSlope();
+    });
   }
-});
+}
 
 // ═══════════════════════════════════════════════════════════
 // MASTER INIT
